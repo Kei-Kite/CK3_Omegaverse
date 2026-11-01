@@ -1,0 +1,121 @@
+﻿omegaverse = {
+
+    dominant_alpha = {
+        traits = {
+            omegaverse_dominant_alpha
+        }
+
+        dna_modifiers = {
+            human = {
+                morph = {
+                    mode = modify
+                    gene = gene_height
+                    template = height_tall
+                    value = 0.2
+                }
+            }
+        }
+    }
+
+    standard_alpha = {
+        traits = {
+            omegaverse_standard_alpha
+        }
+
+        dna_modifiers = {
+            human = {
+                morph = {
+                    mode = modify
+                    gene = gene_height
+                    template = height_tall
+                    value = 0.1
+                }
+            }
+        }
+    }
+
+    recessive_alpha = {
+        traits = {
+            omegaverse_recessive_alpha
+        }
+
+        dna_modifiers = {
+            human = {
+                morph = {
+                    mode = modify
+                    gene = gene_height
+                    template = height_tall
+                    value = 0.05
+                }
+            }
+        }
+    }
+
+    # doesnt work grrrrr
+    dominant_omega = {
+        traits = {
+            omegaverse_dominant_omega
+        }
+
+        priority = 999
+
+        dna_modifiers = {
+            human = {
+                morph = {
+                    mode = replace
+                    gene = beauty_surface
+                    template = beauty_surface_good
+                    value = 1.0
+                }
+
+                accessory = {
+                    mode = add
+                    gene = beards
+                    template = no_beard
+                    value = 1
+                }
+            }
+        }
+    }
+
+    standard_omega = {
+        traits = {
+            omegaverse_standard_omega
+        }
+
+        priority = 999
+
+        dna_modifiers = {
+            human = {
+				morph = {
+					mode = replace
+					gene = complexion
+					template = complexion_beauty_1
+					value = 1.0
+				}
+
+                accessory = {
+                    mode = add
+                    gene = beards
+                    template = no_beard
+                    value = 1
+                }
+            }
+        }
+    }
+
+    recessive_omega = {
+        traits = {
+            omegaverse_recessive_omega
+        }
+
+        priority = 999
+
+        accessory = {
+            mode = add
+            gene = beards
+            template = no_beard
+            value = 1
+        }
+    }
+}

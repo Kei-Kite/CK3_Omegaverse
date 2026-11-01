@@ -1,0 +1,26 @@
+﻿omegaverse_debug_interaction = {
+    category = interaction_debug_omegaverse
+    icon = icon_contract_modification_single
+
+    name = "OMEGAVERSE DEBUG"
+
+    is_shown = {
+        always = yes
+    }
+
+    on_accept = {
+        scope:actor = {
+            save_scope_as = omegaverse_debug_actor
+        }
+
+        scope:recipient = {
+            save_scope_as = omegaverse_debug_target
+        }
+
+        scope:actor = {
+            trigger_event = {
+                id = omegaverse_debug.9000
+            }
+        }
+    }
+}

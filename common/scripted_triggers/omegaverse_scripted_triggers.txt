@@ -1,0 +1,84 @@
+﻿# ======================================
+# SIRE + BEARER
+# ======================================
+omegaverse_can_sire_trigger = {
+    is_adult = yes
+    NOT = { has_trait = infertile }
+
+    OR = {
+        has_trait_with_flag = omegaverse_can_sire
+
+        AND = {
+            is_male = yes
+
+            OR = {
+                has_trait_with_flag = omegaverse_can_sire_if_male_beta
+
+                NOT = {
+                    has_trait_with_flag = omegaverse_secondary_gender
+                }
+            }
+        }
+    }
+}
+
+omegaverse_can_bear_trigger = {
+    is_adult = yes
+    is_pregnant = no
+
+    NOT = { has_trait = infertile }
+    NOT = { has_trait = omegaverse_carrying_child }
+
+    OR = {
+        has_trait_with_flag = omegaverse_can_bear
+
+        AND = {
+            is_female = yes
+
+            OR = {
+                has_trait_with_flag = omegaverse_can_bear_if_female_beta
+
+                NOT = {
+                    has_trait_with_flag = omegaverse_secondary_gender
+                }
+            }
+        }
+    }
+}
+
+# ======================================
+# PAIRING
+# ======================================
+omegaverse_are_compatible_pair_trigger = {
+    exists = scope:partner
+
+    NOT = {
+        this = scope:partner
+    }
+
+    omegaverse_can_bear_trigger = yes
+
+    scope:partner = {
+        omegaverse_can_sire_trigger = yes
+    }
+}
+
+# ======================================
+# CUSTOM PREGNANCY REQUIRED
+# ======================================
+omegaverse_needs_custom_pregnancy_trigger = {
+    exists = scope:omegaverse_conception_bearer
+    exists = scope:omegaverse_conception_sire
+
+    OR = {
+        # male bearer
+        scope:omegaverse_conception_bearer = {
+            is_male = yes
+        }
+
+        # female sire
+        scope:omegaverse_conception_sire = {
+            is_female = yes
+        }
+    }
+}

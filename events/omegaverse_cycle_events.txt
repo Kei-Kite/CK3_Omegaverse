@@ -1,0 +1,528 @@
+﻿namespace = omegaverse_cycle
+
+# ==========================================
+# EVENT INDEX
+#
+# 0010 - start
+# 0020 - peak
+# 0030 - ebb
+# 0040 - end, schedule next 
+# 
+# xxx0 - first rut
+# xxx1 - first heat
+# 
+# 1012 - 
+# 1013 - 
+# ==========================================
+
+# ==========================================
+# START CYCLE
+# ==========================================
+omegaverse_cycle.0010 = {
+    type = character_event
+    hidden = yes
+
+    immediate = {
+        remove_character_flag = omegaverse_first_cycle
+        
+        # alpha
+        if = {
+            limit = {
+                is_alive = yes
+                is_adult = yes
+                has_trait_with_flag = omegaverse_alpha_gender
+  
+            }
+
+            remove_character_flag = omegaverse_cycle_peak
+            remove_character_flag = omegaverse_cycle_ebbed
+
+            remove_character_flag = omegaverse_in_heat
+
+            add_character_flag = omegaverse_in_rut
+            add_character_flag = omegaverse_cycle_start
+
+            add_trait = omegaverse_in_rut_trait
+
+            # first cycle
+            if = {
+                limit = {
+                    NOT = {
+                        has_character_flag = omegaverse_had_first_cycle
+                    }
+                }
+
+                add_character_flag = omegaverse_first_cycle
+
+                trigger_event = {
+                    id = omegaverse_cycle.1010
+                }
+            }
+            else = {
+                trigger_event = {
+                    id = omegaverse_cycle.1012
+                }
+            }
+
+            trigger_event = {
+                    id = omegaverse_cycle.0020
+                    months = { 6 8 }
+            }
+        }
+
+        # omega
+        else_if = {
+            limit = {
+                is_alive = yes
+                is_adult = yes
+
+                has_trait_with_flag = omegaverse_omega_gender
+            }
+
+            # no cycle for preggers
+            if = {
+                limit = {
+                    OR = {
+                        is_pregnant = yes
+                        has_trait = omegaverse_carrying_child
+                        has_character_flag = omegaverse_pregnancy_pending
+                    }
+                }
+
+                # reschedule after pregnancy 
+                trigger_event = {
+                    id = omegaverse_cycle.0010
+                    months = { 10 14 }
+                }
+            }
+
+            else = {
+                remove_character_flag = omegaverse_cycle_peak
+                remove_character_flag = omegaverse_cycle_ebbed
+
+                remove_character_flag = omegaverse_in_rut
+
+                add_character_flag = omegaverse_in_heat
+                add_character_flag = omegaverse_cycle_start
+
+                add_trait = omegaverse_in_heat_trait
+                
+                # first cycle
+                if = {
+                    limit = {
+                        NOT = {
+                            has_character_flag = omegaverse_had_first_cycle
+                        }
+                    }
+
+                    add_character_flag = omegaverse_first_cycle
+
+                    trigger_event = {
+                        id = omegaverse_cycle.1011
+                    }
+                }
+                else = {
+                    trigger_event = {
+                        id = omegaverse_cycle.1013
+                    }
+                }
+
+                trigger_event = {
+                    id = omegaverse_cycle.0020
+                    months = { 6 8 }
+                }
+            }
+        }
+
+        # clean up for changed trait (..eventually)
+        else = {
+            remove_character_flag = omegaverse_cycle_start
+            remove_character_flag = omegaverse_cycle_peak
+            remove_character_flag = omegaverse_cycle_ebbed
+            
+            remove_character_flag = omegaverse_in_heat
+            remove_character_flag = omegaverse_in_rut
+            remove_character_flag = omegaverse_cycle_chain_active
+            
+            remove_character_flag = omegaverse_first_cycle
+            remove_character_flag = omegaverse_had_first_cycle
+        }
+    }
+}
+
+# ==========================================
+# PEAK HEAT / RUT
+# ==========================================
+omegaverse_cycle.0020 = {
+    type = character_event
+    hidden = yes
+
+    immediate = {
+        if = {
+            limit = {
+                is_alive = yes
+                OR = {
+                    has_character_flag = omegaverse_in_heat
+                    has_character_flag = omegaverse_in_rut
+                }
+            }
+
+            remove_character_flag = omegaverse_cycle_start
+            add_character_flag = omegaverse_cycle_peak
+
+            # first cycle peak
+            if = {
+                limit = {
+                    has_character_flag = omegaverse_first_cycle
+                }
+
+                if = {
+                    limit = {
+                        has_character_flag = omegaverse_in_rut
+                    }
+
+                    trigger_event = {
+                        id = omegaverse_cycle.1020
+                    }
+                }
+                else_if = {
+                    limit = {
+                        has_character_flag = omegaverse_in_heat
+                    }
+
+                    trigger_event = {
+                        id = omegaverse_cycle.1021
+                    }
+                }
+            }
+
+            trigger_event = {
+                id = omegaverse_cycle.0030
+                months = { 6 8 }
+            }
+        }
+    }
+}
+
+# ==========================================
+# HEAT / RUT EBB
+# ==========================================
+omegaverse_cycle.0030 = {
+    type = character_event
+    hidden = yes
+
+    immediate = {
+        if = {
+            limit = {
+                is_alive = yes
+                OR = {
+                    has_character_flag = omegaverse_in_heat
+                    has_character_flag = omegaverse_in_rut
+                }
+            }
+
+            remove_character_flag = omegaverse_cycle_peak
+            add_character_flag = omegaverse_cycle_ebbed
+
+            # first cycle: full ebb event
+            if = {
+                limit = {
+                    has_character_flag = omegaverse_first_cycle
+                }
+
+                if = {
+                    limit = {
+                        has_character_flag = omegaverse_in_rut
+                    }
+
+                    trigger_event = {
+                        id = omegaverse_cycle.1030
+                    }
+                }
+                else_if = {
+                    limit = {
+                        has_character_flag = omegaverse_in_heat
+                    }
+
+                    trigger_event = {
+                        id = omegaverse_cycle.1031
+                    }
+                }
+                
+            }
+
+            trigger_event = {
+                id = omegaverse_cycle.0040
+                months = { 3 5 }
+            }
+        }
+    }
+}
+
+# ==========================================
+# END CYCLE
+# ==========================================
+omegaverse_cycle.0040 = {
+    type = character_event
+    hidden = yes
+
+    immediate = {
+        # first cycle completed
+        if = {
+            limit = {
+                has_character_flag = omegaverse_first_cycle
+            }
+
+            if = {
+                limit = {
+                    has_character_flag = omegaverse_in_rut
+                }
+
+                trigger_event = {
+                    id = omegaverse_cycle.1040
+                }
+            }
+            else_if = {
+                limit = {
+                    has_character_flag = omegaverse_in_heat
+                }
+
+                trigger_event = {
+                    id = omegaverse_cycle.1041
+                }
+            }
+    
+            remove_character_flag = omegaverse_first_cycle
+            add_character_flag = omegaverse_had_first_cycle
+        }
+        
+        remove_character_flag = omegaverse_in_heat
+        remove_character_flag = omegaverse_in_rut
+
+        remove_character_flag = omegaverse_cycle_start
+        remove_character_flag = omegaverse_cycle_peak
+        remove_character_flag = omegaverse_cycle_ebbed
+
+        remove_trait = omegaverse_in_heat_trait    
+        remove_trait = omegaverse_in_rut_trait
+
+        if = {
+            limit = {
+                is_alive = yes
+                is_adult = yes
+
+                OR = {
+                    has_trait_with_flag = omegaverse_alpha_gender
+                    has_trait_with_flag = omegaverse_omega_gender
+                }
+            }
+
+            # schedule next
+            trigger_event = {
+                id = omegaverse_cycle.0010
+                years = { 3 5 }
+            }
+        }
+
+        else = {
+            remove_character_flag = omegaverse_cycle_chain_active
+        }
+    }
+}
+
+# ==========================================
+# FIRST INTRODUCTION
+# ==========================================
+omegaverse_cycle.1010 = {
+    type = character_event
+    title = omegaverse_cycle.1010.t
+    desc = omegaverse_cycle.1010.d
+
+    theme = healthcare
+
+    right_portrait = {
+        character = root
+        animation = stunned
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_cycle.1010.a
+    }
+}
+
+omegaverse_cycle.1011 = {
+    type = character_event
+    title = omegaverse_cycle.1011.t
+    desc = omegaverse_cycle.1011.d
+
+    theme = healthcare
+
+    right_portrait = {
+        character = root
+        animation = stunned
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_cycle.1011.a
+    }
+}
+
+# ==========================================
+# RECURRING
+# ==========================================
+omegaverse_cycle.1012 = {
+    type = character_event
+    title = omegaverse_cycle.1012.t
+    desc = omegaverse_cycle.1012.d
+
+    theme = healthcare
+
+    right_portrait = {
+        character = root
+        animation = stunned
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_cycle.1012.a
+    }
+}
+
+omegaverse_cycle.1013 = {
+    type = character_event
+    title = omegaverse_cycle.1013.t
+    desc = omegaverse_cycle.1013.d
+
+    theme = healthcare
+
+    right_portrait = {
+        character = root
+        animation = stunned
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_cycle.1013.a
+    }
+}
+
+# ==========================================
+# FIRST PEAK
+# ==========================================
+omegaverse_cycle.1020 = {
+    type = character_event
+    title = omegaverse_cycle.1020.t
+    desc = omegaverse_cycle.1020.d
+
+    theme = healthcare
+    override_background = { reference = bedchamber }
+
+    right_portrait = {
+        character = root
+        animation = worry
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_cycle.1020.a
+    }
+}
+
+omegaverse_cycle.1021 = {
+    type = character_event
+    title = omegaverse_cycle.1021.t
+    desc = omegaverse_cycle.1021.d
+
+    theme = healthcare
+    override_background = { reference = bedchamber }
+
+    right_portrait = {
+        character = root
+        animation = worry
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_cycle.1021.a
+    }
+}
+
+# ==========================================
+# FIRST EBB
+# ==========================================
+omegaverse_cycle.1030 = {
+    type = character_event
+    title = omegaverse_cycle.1030.t
+    desc = omegaverse_cycle.1030.d
+
+    theme = healthcare
+
+    right_portrait = {
+        character = root
+        animation = sadness
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_cycle.1030.a
+    }
+}
+
+omegaverse_cycle.1031 = {
+    type = character_event
+    title = omegaverse_cycle.1031.t
+    desc = omegaverse_cycle.1031.d
+
+    theme = healthcare
+
+    right_portrait = {
+        character = root
+        animation = sadness
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_cycle.1031.a
+    }
+}
+
+# ==========================================
+# FIRST  END
+# ==========================================
+omegaverse_cycle.1040 = {
+    type = character_event
+    title = omegaverse_cycle.1040.t
+    desc = omegaverse_cycle.1040.d
+
+    theme = healthcare
+
+    right_portrait = {
+        character = root
+        animation = happiness
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_cycle.1040.a
+    }
+}
+
+omegaverse_cycle.1041 = {
+    type = character_event
+    title = omegaverse_cycle.1041.t
+    desc = omegaverse_cycle.1041.d
+
+    theme = healthcare
+
+    right_portrait = {
+        character = root
+        animation = happiness
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_cycle.1041.a
+    }
+}

@@ -1,0 +1,62 @@
+﻿l_english:
+ # ==========================================
+ # MANIFESTATION
+ # ==========================================
+ omegaverse_manifestation.0002.t:0 "Manifestation"
+ omegaverse_manifestation.0002.d:0 "[ROOT.Char.Custom('omegaverse_manifestation_desc')]"
+ omegaverse_manifestation.0002.a:0 "So this is what I am." 
+
+ 
+ omegaverse_manifestation_desc_dominant_alpha:0 "The uncertainty surrounding my secondary gender finally comes to an end. \nThe intensity of my presence, the instinct to lead, and the way others respond to me all begin to make sense. \n\nI am a dominant Alpha."
+ omegaverse_manifestation_desc_standard_alpha:0 "The uncertainty surrounding my secondary gender finally comes to an end. \nMy instinct to protect and lead was no coincidence. \n\nI am an Alpha."
+ omegaverse_manifestation_desc_recessive_alpha:0 "The uncertainty surrounding my secondary gender finally comes to an end. \nThe instinct to take charge was always there, even if it rarely demanded to be heard. \n\nI am a recessive Alpha."
+
+ omegaverse_manifestation_desc_unstable_beta:0 "The uncertainty surrounding my secondary gender finally comes to an end, though the answer raises new questions. \n\nI seem to be a Beta."
+ omegaverse_manifestation_desc_standard_beta:0 "The uncertainty surrounding my secondary gender finally comes to an end. \nMy unremarkable development was a sign in itself. \n\nI am a Beta."
+
+ omegaverse_manifestation_desc_dominant_omega:0 "The uncertainty surrounding my secondary gender finally comes to an end. \nThe attention I attract and the reactions I inspire suddenly make sense. \n\nI am a dominant Omega."
+ omegaverse_manifestation_desc_standard_omega:0 "The uncertainty surrounding my secondary gender finally comes to an end. \nThe warmth I seem to inspire in others was no coincidence. \n\nI am an Omega."
+ omegaverse_manifestation_desc_recessive_omega:0 "The uncertainty surrounding my secondary gender finally comes to an end. \nMy gentle temperament and unusual sensitivity were signs of something deeper. \n\nI am a recessive Omega."
+
+ omegaverse_manifestation_desc_fallback:0 "The uncertainty surrounding my secondary gender finally comes to an end. \nAt last, I have an answer to the questions that have followed me for so long."
+
+ # ==========================================
+ # MANIFESTATION PARENT SIDE
+ # ==========================================
+ omegaverse_manifestation.0003.t:0 "Manifestation"
+ omegaverse_manifestation.0003.d:0 "[omegaverse_child.Custom('omegaverse_parent_manifestation_desc')]"
+ omegaverse_manifestation.0003.a:0 "I always knew there was something different."
+
+ omegaverse_parent_manifestation_desc_dominant_alpha:0 "At last, the uncertainty surrounding [ROOT.Char.GetFirstName]'s secondary gender comes to an end. \nThe intensity of [ROOT.Char.GetHerHis] presence, the instinct to lead, and the way others respond to [ROOT.Char.GetHerHim] all begin to make sense.\n\n[ROOT.Char.GetFirstName] is a dominant Alpha."
+ omegaverse_parent_manifestation_desc_standard_alpha:0 "At last, the uncertainty surrounding [ROOT.Char.GetFirstName]'s secondary gender comes to an end. \n[ROOT.Char.GetHerHis] instinct to protect and lead was no coincidence.\n\n[ROOT.Char.GetFirstName] is an Alpha."
+ omegaverse_parent_manifestation_desc_recessive_alpha:0 "At last, the uncertainty surrounding [ROOT.Char.GetFirstName]'s secondary gender comes to an end. \nThe instinct to take charge was always there, even if it rarely demanded to be heard.\n\n[ROOT.Char.GetFirstName] is a recessive Alpha."
+ 
+ omegaverse_parent_manifestation_desc_unstable_beta:0 "At last, the uncertainty surrounding [ROOT.Char.GetFirstName]'s secondary gender finally comes to an end, though the answer raises new questions.\n\n[ROOT.Char.GetFirstName] appears to be a Beta."
+ omegaverse_parent_manifestation_desc_standard_beta:0 "At last, the uncertainty surrounding [ROOT.Char.GetFirstName]'s secondary gender comes to an end. \n[ROOT.Char.GetHerHis] unremarkable development was a sign in itself.\n\n[ROOT.Char.GetFirstName] is a Beta."
+ 
+ omegaverse_parent_manifestation_desc_dominant_omega:0 "At last, the uncertainty surrounding [ROOT.Char.GetFirstName]'s secondary gender comes to an end. \nThe attention [ROOT.Char.GetHerHis] attracts and the reactions [ROOT.Char.GetHerHis] inspires suddenly make sense.\n\n[ROOT.Char.GetFirstName] is a dominant Omega."
+ omegaverse_parent_manifestation_desc_standard_omega:0 "At last, the uncertainty surrounding [ROOT.Char.GetFirstName]'s secondary gender comes to an end. \nThe warmth [ROOT.Char.GetHerHis] seems to inspire in others was no coincidence.\n\n[ROOT.Char.GetFirstName] is an Omega."
+ omegaverse_parent_manifestation_desc_recessive_omega:0 "At last, the uncertainty surrounding [ROOT.Char.GetFirstName]'s secondary gender comes to an end. \n[ROOT.Char.GetHerHis] gentle temperament and unusual sensitivity were signs of something deeper.\n\n[ROOT.Char.GetFirstName] is a recessive Omega."
+ 
+ omegaverse_parent_manifestation_desc_fallback:0 "At last, the uncertainty surrounding [ROOT.Char.GetFirstName]'s secondary gender comes to an end. \nThe questions surrounding [ROOT.Char.GetHerHis]'s nature finally have an answer."
+ # ==========================================
+ # HINTS
+ # ==========================================
+ omegaverse_manifestation.4010.t:0 "Something Unusual"
+ omegaverse_manifestation.4010.d:0 "There are moments when [ROOT.Char.GetFirstName] catches [ROOT.Char.GetHerHim]self behaving in ways [ROOT.Char.GetSheHe] cannot quite explain.\n\nCertain impulses seem to come more naturally than they once did, and certain situations draw out reactions that feel strangely instinctive. \n\nEven [ROOT.Char.GetHerHis] senses seem sharper at times. Scents that once went unnoticed linger in [ROOT.Char.GetHerHis] awareness, and the presence of other people can be strangely difficult to ignore. \n\nNone of it is enough to make sense of on its own, yet the pattern has become difficult to ignore."
+ omegaverse_manifestation.4010.a:0 "Perhaps I am simply growing."
+
+ omegaverse_manifestation.4011.t:0 "A Strange Reaction"
+ omegaverse_manifestation.4011.d:0 "Lately, [ROOT.Char.GetFirstName] has noticed that certain people seem to affect [ROOT.Char.GetHerHim] differently. \n\nThe proximity of some individuals brings an inexplicable sense of comfort, while others leave [ROOT.Char.GetHerHim] unusually eager to put some distance between them. \nMost unsettling of all are the moments when [ROOT.Char.GetFirstName]'s body seems to react before [ROOT.Char.GetHerHis] mind can catch up. \n\nIt is difficult to say why these reactions feel so strong."
+ omegaverse_manifestation.4011.a:0 "I cannot explain it."
+
+ # ==========================================
+ # PARENT HINTS
+ # ==========================================
+ omegaverse_manifestation.4020.t:0 "Something Unusual"
+ omegaverse_manifestation.4020.d:0 "Lately, you have noticed subtle changes in [child.GetFirstName]. There are moments when [child.GetSheHe] behaves in ways that seem difficult to explain.\n\nCertain impulses seem to come more naturally to [child.GetHerHim] than they once did, and certain situations draw out reactions that feel strangely instinctive.\n\nEven [child.GetHerHis] senses seem sharper at times. Scents that once went unnoticed appear to linger in [child.GetHerHis] awareness, and the presence of other people can provoke surprisingly strong reactions.\n\nNone of it is enough to draw a firm conclusion, yet the pattern has become difficult to ignore."
+ omegaverse_manifestation.4020.a:0 "Perhaps it is simply part of growing up."
+
+ omegaverse_manifestation.4021.t:0 "A Strange Reaction"
+ omegaverse_manifestation.4021.d:0 "You have begun to notice that certain people affect [child.GetFirstName] differently from others.\n\nThe proximity of some individuals seems to bring [child.GetHerHim] an inexplicable sense of comfort, while others leave [child.GetHerHim] visibly uneasy or eager to put some distance between them.\n\nMost unsettling of all are the moments when [child.GetHerHis] body seems to react before [child.GetHerHis] mind can catch up.\n\nIt is difficult to say why these reactions are so strong, but you cannot help wondering whether they mean something."
+ omegaverse_manifestation.4021.a:0 "I should keep an eye on this."

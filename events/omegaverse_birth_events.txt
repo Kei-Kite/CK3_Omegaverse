@@ -1,0 +1,1057 @@
+﻿namespace = omegaverse_birth
+
+# ==========================================
+# EVENT INDEX
+#
+# 1000 - omegaverse newborn
+# 1001 - naming window
+# 2001 - birth management
+# 3001 - child dies during delivery
+# 3002 - sire: child dies during delivery
+# 3011 - bearer dies during delivery
+# 3012 - sire: bearer dies during delivery
+# 3021 - bearer and child die
+# 3022 - sire: bearer and child die
+# 3031 - child becomes sickly
+# 3032 - sire: child becomes sickly
+# 3033 - sickly child recovery management
+# 3034 - sickly child recovers
+# 3035 - bearer/sire: sickly child recovers
+# 3041 - bearer becomes ill
+# ==========================================
+
+# ==========================================
+# SCOPES
+#   
+# scope:omegaverse_bearer 
+# scope:omegaverse_sire 
+# scope:child   (vanilla)
+# scope:dummy_gender 
+# var:omegaverse_child 
+#   bearer - pointer to latest child
+# ==========================================
+
+# ==========================================
+# OMEGAVERSE BIRTH
+#
+# creates child
+# vanilla parentage gives bearer the
+# fitting relationship.
+# omegaverse parents are separate
+# ==========================================
+omegaverse_birth.1000 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        has_trait = omegaverse_carrying_child
+    }
+
+    immediate = {
+        remove_trait = omegaverse_carrying_child
+
+        save_scope_as = omegaverse_bearer
+
+        if = {
+            limit = {
+                exists = var:omegaverse_sire
+            }
+
+            var:omegaverse_sire = {
+                save_scope_as = omegaverse_sire
+            }
+        }
+
+        # gender taken from conception
+        if = {
+            limit = {
+                has_character_flag = omegaverse_unborn_female
+            }
+
+            create_character = {
+                age = 0
+                gender = female
+                faith = root.faith
+                culture = root.culture
+                location = root.location
+
+                save_scope_as = child
+            }
+        }
+
+        else = {
+            create_character = {
+                age = 0
+                gender = male
+                faith = root.faith
+                culture = root.culture
+                location = root.location
+
+                save_scope_as = child
+            }
+        }
+
+        # parentage
+        scope:child = {
+
+            add_character_flag = omegaverse_child
+
+            set_variable = {
+                name = omegaverse_bearer
+                value = scope:omegaverse_bearer
+            }
+
+            if = {
+                limit = {
+                    exists = scope:omegaverse_sire
+                }
+
+                set_variable = {
+                    name = omegaverse_sire
+                    value = scope:omegaverse_sire
+                }
+            }
+
+            # assign child to bearer
+            # biggest wip bc REAL father n stuff
+            if = {
+                limit = {
+                    scope:omegaverse_bearer = {
+                        is_female = yes
+                    }
+                }
+
+                set_mother = scope:omegaverse_bearer
+            }
+
+            else = {
+                set_father = scope:omegaverse_bearer
+            }
+
+            clear_variable_list = omegaverse_parents
+
+            # for gui
+            add_to_variable_list = {
+                name = omegaverse_parents
+                target = scope:omegaverse_bearer
+            }
+
+            if = {
+                limit = {
+                    exists = scope:omegaverse_sire
+                }
+
+                add_to_variable_list = {
+                    name = omegaverse_parents
+                    target = scope:omegaverse_sire
+                }
+            }
+        }
+
+        set_variable = {
+            name = omegaverse_child
+            value = scope:child
+        }
+
+        # give parents access to child
+        scope:omegaverse_bearer = {
+            add_to_variable_list = {
+                name = omegaverse_children
+                target = scope:child
+            }
+        }
+
+        if = {
+            limit = {
+                exists = scope:omegaverse_sire
+            }
+
+            scope:omegaverse_sire = {
+                add_to_variable_list = {
+                    name = omegaverse_children
+                    target = scope:child
+                }
+            }
+        }
+
+        # house
+        scope:child = {
+
+            if = {
+                limit = {
+                    exists = scope:omegaverse_sire
+                    exists = scope:omegaverse_sire.house
+                }
+
+                set_house = scope:omegaverse_sire.house
+            }
+
+            else_if = {
+                limit = {
+                    exists = scope:omegaverse_bearer.house
+                }
+
+                set_house = scope:omegaverse_bearer.house
+            }
+        }
+
+        # employer
+        scope:child = {
+            set_employer = scope:omegaverse_bearer
+        }
+
+        # genetics
+        scope:child = {
+
+            omegaverse_determine_abo = yes
+
+            add_trait = omegaverse_unrevealed_secondary_gender
+            add_character_flag = omegaverse_secondary_gender_hidden
+        }
+
+        # child ill
+        if = {
+            limit = {
+                has_character_flag = omegaverse_child_will_become_sickly
+            }
+
+            remove_character_flag = omegaverse_child_will_become_sickly
+
+            trigger_event = {
+                id = omegaverse_birth.3031
+                days = { 10 30 }
+            }
+        }
+
+        # bearer ill
+        if = {
+            limit = {
+                has_character_flag = omegaverse_bearer_will_become_ill
+            }
+
+            remove_character_flag = omegaverse_bearer_will_become_ill
+
+            trigger_event = {
+                id = omegaverse_birth.3041
+                days = { 10 30 }
+            }
+        }
+
+        # bearer dies
+        if = {
+            limit = {
+                has_character_flag = omegaverse_bearer_will_die
+            }
+
+            trigger_event = {
+                id = omegaverse_birth.3011
+            }
+        }
+
+        # birth event
+        else_if = {
+            limit = {
+                is_ai = no
+            }
+
+            trigger_event = {
+                id = omegaverse_birth.1001
+            }
+        }
+
+        omegaverse_clear_pregnancy = yes
+    }
+}
+
+# ==========================================
+# NAMING WINDOW
+# ==========================================
+omegaverse_birth.1001 = {
+    type = character_event
+
+    title = birth.1001.t
+    desc = birth.1001.desc
+
+    theme = pregnancy
+    override_background = {
+        reference = bedchamber
+    }
+
+    left_portrait = {
+        character = root
+        animation = newborn
+    }
+
+    lower_left_portrait = scope:child
+
+    trigger = {
+        is_ai = no
+        exists = scope:child
+    }
+
+    widgets = {
+        widget = {
+            gui = "event_window_widget_name_child"
+            container = "dynamic_birth_name"
+            controller = name_character
+
+            setup_scope = {
+                scope:child = {
+                    save_scope_as = name_character_target
+                }
+            }
+        }
+    }
+
+    option = {
+        name = birth.1001.a
+    }
+}
+
+# ==========================================
+# BIRTH MANAGEMENT
+#
+# only gives birth if the pregnancy is old
+# enough 
+# ==========================================
+omegaverse_birth.2001 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        has_trait = omegaverse_carrying_child
+
+        OR = {
+            NOT = {
+                exists = var:omegaverse_pregnancy_start
+            }
+
+            current_date >= {
+                value = var:omegaverse_pregnancy_start
+                add = 200
+            }
+        }
+    }
+
+    immediate = {
+        trigger_event = {
+            id = omegaverse_birth.1000
+        }
+    }
+}
+
+# ==========================================
+# CHILD DIES DURING DELIVERY
+# ==========================================
+omegaverse_birth.3001 = {
+    type = character_event
+    title = birth.3001.t
+
+    desc = birth.3001.desc_other_child
+    theme = death
+
+    override_background = {
+        reference = bedchamber
+    }
+
+    left_portrait = {
+        character = root
+        animation = grief
+        outfit_tags = { nightgown }
+    }
+
+    trigger = {
+        has_trait = omegaverse_carrying_child
+    }
+
+    immediate = {
+        if = {
+            limit = {
+                has_character_flag = omegaverse_unborn_female
+            }
+
+            dummy_female = {
+                save_scope_as = dummy_gender
+            }
+        }
+
+        else = {
+            dummy_male = {
+                save_scope_as = dummy_gender
+            }
+        }
+
+        save_scope_as = omegaverse_bearer
+        save_scope_as = mother
+
+        play_music_cue = mx_cue_death
+
+        create_character_memory = {
+            type = child_stillborn
+            participants = {
+                mother = root
+            }
+        }
+
+        if = {
+            limit = {
+                exists = var:omegaverse_sire
+
+                var:omegaverse_sire = {
+                    is_alive = yes
+                }
+            }
+
+            var:omegaverse_sire = {
+                trigger_event = {
+                    id = omegaverse_birth.3002
+                }
+            }
+        }
+
+        omegaverse_clear_pregnancy = yes
+
+        custom_tooltip = birth.3001.a.tt
+    }
+
+    option = {
+        name = birth.3001.a
+    }
+}
+
+# ==========================================
+# SIRE: CHILD DIES DURING DELIVERY
+# ==========================================
+omegaverse_birth.3002 = {
+    type = character_event
+    title = birth.3001.t
+    desc = birth.3002.desc
+
+    theme = death
+
+    override_background = {
+        reference = bedchamber
+    }
+
+    left_portrait = {
+        character = root
+        animation = stunned
+    }
+
+    right_portrait = {
+        character = scope:omegaverse_bearer
+        animation = grief
+        outfit_tags = { nightgown }
+    }
+
+    immediate = {
+        play_music_cue = mx_cue_death
+
+        create_character_memory = {
+            type = child_stillborn
+            participants = {
+                mother = scope:omegaverse_bearer
+            }
+        }
+
+        custom_tooltip = birth.3001.a.tt
+    }
+
+    option = {
+        name = birth.3002.a
+    }
+}
+
+# ==========================================
+# BEARER DIES
+# ==========================================
+omegaverse_birth.3011 = {
+    type = character_event
+    title = birth.3001.t
+
+    desc = birth.3011.desc
+
+    theme = death
+
+    override_background = {
+        reference = bedchamber
+    }
+
+    left_portrait = {
+        character = root
+        animation = newborn
+        outfit_tags = { nightgown }
+    }
+
+    lower_center_portrait = var:omegaverse_child
+
+    trigger = {
+        has_character_flag = omegaverse_bearer_will_die
+        exists = var:omegaverse_child
+    }
+
+    immediate = {
+        play_music_cue = mx_cue_death
+
+        save_scope_as = omegaverse_bearer
+        save_scope_as = mother
+
+        var:omegaverse_child = {
+            save_scope_as = child
+            save_scope_as = dummy_gender
+        }
+
+        if = {
+            limit = {
+                var:omegaverse_child = {
+                    exists = var:omegaverse_sire
+
+                    var:omegaverse_sire = {
+                        is_alive = yes
+                    }
+                }
+            }
+
+            var:omegaverse_child = {
+                var:omegaverse_sire = {
+                    trigger_event = {
+                        id = omegaverse_birth.3012
+                    }
+                }
+            }
+        }
+
+        # the one flag the clean-up leaves alone
+        remove_character_flag = omegaverse_bearer_will_die
+
+        omegaverse_clear_pregnancy = yes
+    }
+
+    option = {
+        name = birth.3011.a
+
+        death = {
+            death_reason = death_childbirth
+        }
+    }
+}
+
+# ==========================================
+# SIRE: BEARER DIES
+# ==========================================
+omegaverse_birth.3012 = {
+    type = character_event
+    title = birth.3001.t
+
+    desc = {
+        desc = birth.3012.start.desc
+        desc = birth.3012.desc
+    }
+
+    theme = death
+
+    override_background = {
+        reference = bedchamber
+    }
+
+    left_portrait = {
+        character = root
+        animation = newborn
+    }
+
+    right_portrait = {
+        character = scope:omegaverse_bearer
+        animation = sick
+        outfit_tags = { nightgown }
+    }
+
+    lower_right_portrait = scope:child
+
+    immediate = {
+        play_music_cue = mx_cue_death
+
+        show_as_tooltip = {
+            scope:omegaverse_bearer = {
+                death = {
+                    death_reason = death_childbirth
+                }
+            }
+        }
+    }
+
+    option = {
+        name = birth.3012.a
+
+        add_stress = minor_stress_gain
+    }
+}
+
+# ==========================================
+# BEARER AND CHILD DIE
+# ==========================================
+omegaverse_birth.3021 = {
+    type = character_event
+    title = birth.3001.t
+    desc = birth.3021.desc
+
+    theme = death
+
+    override_background = {
+        reference = bedchamber
+    }
+
+    left_portrait = {
+        character = root
+        animation = pain
+        outfit_tags = { nightgown }
+    }
+
+    trigger = {
+        has_trait = omegaverse_carrying_child
+    }
+
+    immediate = {
+        if = {
+            limit = {
+                has_character_flag = omegaverse_unborn_female
+            }
+
+            dummy_female = {
+                save_scope_as = dummy_gender
+            }
+        }
+
+        else = {
+            dummy_male = {
+                save_scope_as = dummy_gender
+            }
+        }
+
+        save_scope_as = omegaverse_bearer
+        save_scope_as = mother
+
+        play_music_cue = mx_cue_death
+
+        create_character_memory = {
+            type = child_stillborn
+            participants = {
+                mother = root
+            }
+        }
+
+        if = {
+            limit = {
+                exists = var:omegaverse_sire
+
+                var:omegaverse_sire = {
+                    is_alive = yes
+                }
+            }
+
+            var:omegaverse_sire = {
+                trigger_event = {
+                    id = omegaverse_birth.3022
+                }
+            }
+        }
+
+        omegaverse_clear_pregnancy = yes
+
+        custom_tooltip = birth.3001.a.tt
+    }
+
+    option = {
+        name = birth.3021.a
+
+        death = {
+            death_reason = death_childbirth
+        }
+    }
+}
+
+# ==========================================
+# SIRE: BEARER AND CHILD DIE
+# ==========================================
+omegaverse_birth.3022 = {
+    type = character_event
+    title = birth.3001.t
+    desc = birth.3022.desc
+
+    theme = death
+
+    override_background = {
+        reference = bedchamber
+    }
+
+    left_portrait = {
+        character = root
+        animation = grief
+    }
+
+    right_portrait = {
+        character = scope:omegaverse_bearer
+        animation = pain
+        outfit_tags = { nightgown }
+    }
+
+    immediate = {
+        play_music_cue = mx_cue_death
+
+        create_character_memory = {
+            type = child_stillborn
+            participants = {
+                mother = scope:omegaverse_bearer
+            }
+        }
+
+        show_as_tooltip = {
+            scope:omegaverse_bearer = {
+                death = {
+                    death_reason = death_childbirth
+                }
+            }
+        }
+
+        custom_tooltip = birth.3001.a.tt
+    }
+
+    option = {
+        name = {
+            trigger = {
+                NOT = {
+                    faith = {
+                        religion_tag = buddhism_religion
+                    }
+                }
+            }
+            text = birth.3022.a
+        }
+
+        name = {
+            trigger = {
+                faith = {
+                    religion_tag = buddhism_religion
+                }
+            }
+            text = birth.3022.a.buddhism
+        }
+
+        add_stress = medium_stress_gain
+    }
+}
+
+# ==========================================
+# ILL CHILD
+# ==========================================
+omegaverse_birth.3031 = {
+    type = character_event
+    title = birth.3031.t
+
+    desc = {
+        desc = birth.3031.start.desc
+
+        first_valid = {
+            triggered_desc = {
+                trigger = {
+                    var:omegaverse_child = {
+                        exists = var:omegaverse_bearer
+                    }
+                }
+                desc = birth.3031.princessprince.desc
+            }
+
+            desc = birth.3031.daughterson.desc
+        }
+
+        desc = birth.3031.end.desc
+    }
+
+    theme = physical_health
+
+    left_portrait = {
+        character = var:omegaverse_child
+        animation = sick
+        camera = camera_event_table_center
+    }
+
+    trigger = {
+        exists = var:omegaverse_child
+
+        var:omegaverse_child = {
+            is_alive = yes
+            exists = var:omegaverse_bearer
+        }
+    }
+
+    immediate = {
+        var:omegaverse_child = {
+            save_scope_as = child
+        }
+
+        play_music_cue = mx_cue_illness
+
+        var:omegaverse_child = {
+            add_trait = sickly
+        }
+
+        save_scope_as = omegaverse_bearer
+        save_scope_as = mother
+
+        if = {
+            limit = {
+                var:omegaverse_child = {
+                    exists = var:omegaverse_sire
+
+                    var:omegaverse_sire = {
+                        is_alive = yes
+                    }
+                }
+            }
+
+            var:omegaverse_child = {
+                var:omegaverse_sire = {
+                    trigger_event = {
+                        id = omegaverse_birth.3032
+                    }
+                }
+            }
+        }
+
+        trigger_event = {
+            id = omegaverse_birth.3033
+        }
+    }
+
+    option = {
+        name = birth.3031.a
+    }
+}
+
+# ==========================================
+# SIRE: ILL CHILD
+# ==========================================
+omegaverse_birth.3032 = {
+    type = character_event
+    title = birth.3031.t
+
+    desc = {
+        desc = birth.3031.start.desc
+
+        first_valid = {
+            triggered_desc = {
+                trigger = {
+                    scope:child = {
+                        exists = var:omegaverse_bearer
+                    }
+                }
+                desc = birth.3031.princessprince.desc
+            }
+
+            desc = birth.3031.daughterson.desc
+        }
+
+        desc = birth.3031.end.desc
+    }
+
+    theme = physical_health
+
+    left_portrait = {
+        character = scope:child
+        animation = sick
+        camera = camera_event_table_center
+    }
+
+    right_portrait = {
+        character = root
+        animation = worry
+        camera = camera_body
+    }
+
+    immediate = {
+        play_music_cue = mx_cue_illness
+
+        scope:child = {
+            show_as_tooltip = {
+                add_trait_force_tooltip = sickly
+            }
+        }
+    }
+
+    option = {
+        name = birth.3031.a
+    }
+}
+
+# ==========================================
+# SICKLY CHILD RECOVERY MANAGEMENT
+#
+# runs on the bearer, hands the timer to
+# the child cuz 3034 expects child root
+# ==========================================
+omegaverse_birth.3033 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        exists = var:omegaverse_child
+
+        var:omegaverse_child = {
+            is_alive = yes
+            has_trait = sickly
+        }
+    }
+
+    immediate = {
+        var:omegaverse_child = {
+            trigger_event = {
+                id = omegaverse_birth.3034
+                days = { 0 180 }
+            }
+        }
+    }
+}
+
+# ==========================================
+# SICKLY CHILD RECOVERS
+# ==========================================
+omegaverse_birth.3034 = {
+    type = character_event
+    title = birth.3034.t
+    desc = birth.3034.desc
+
+    theme = physical_health
+
+    left_portrait = {
+        character = root
+        animation = happiness
+    }
+
+    trigger = {
+        has_trait = sickly
+        is_alive = yes
+    }
+
+    immediate = {
+        play_music_cue = mx_cue_positive_effect
+
+        save_scope_as = child
+
+        if = {
+            limit = {
+                exists = var:omegaverse_bearer
+
+                var:omegaverse_bearer = {
+                    is_alive = yes
+                }
+            }
+
+            var:omegaverse_bearer = {
+                trigger_event = {
+                    id = omegaverse_birth.3035
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                exists = var:omegaverse_sire
+
+                var:omegaverse_sire = {
+                    is_alive = yes
+                }
+            }
+
+            var:omegaverse_sire = {
+                trigger_event = {
+                    id = omegaverse_birth.3035
+                }
+            }
+        }
+    }
+
+    option = {
+        name = birth.3034.a
+
+        remove_trait = sickly
+    }
+}
+
+# ==========================================
+# BEARER/SIRE: SICKLY CHILD RECOVERS
+# ==========================================
+omegaverse_birth.3035 = {
+    type = character_event
+    title = birth.3034.t
+    desc = birth.3035.desc
+
+    theme = physical_health
+
+    left_portrait = {
+        character = scope:child
+        animation = happiness
+    }
+
+    trigger = {
+        exists = scope:child
+
+        scope:child = {
+            is_alive = yes
+        }
+    }
+
+    immediate = {
+        play_music_cue = mx_cue_positive_effect
+
+        scope:child = {
+            show_as_tooltip = {
+                remove_trait_force_tooltip = sickly
+            }
+        }
+    }
+
+    option = {
+        name = birth.3035.a
+    }
+}
+
+# ==========================================
+# ILL BEARER
+# ==========================================
+omegaverse_birth.3041 = {
+    type = character_event
+    title = birth.3041.t
+
+    desc = {
+        desc = birth.3041.start.desc
+        desc = birth.3041.one_child.desc
+        desc = birth.3041.end
+    }
+
+    theme = healthcare
+
+    left_portrait = {
+        character = root
+        animation = sick
+    }
+
+    trigger = {
+        can_contract_disease_trigger = {
+            DISEASE = ill
+        }
+    }
+
+    immediate = {
+        var:omegaverse_child = {
+            save_scope_as = child
+        }
+
+        contract_disease_effect = {
+            DISEASE = ill
+            TREATMENT_EVENT = yes
+        }
+    }
+
+    option = {
+        name = birth.3041.a
+    }
+}

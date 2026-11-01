@@ -1,0 +1,84 @@
+﻿l_english:
+ # ==========================================
+ # PREGNANCY
+ # ==========================================
+ trait_omegaverse_carrying_child:0 "Pregnant"
+ trait_omegaverse_carrying_child_desc:0 "This character is carrying a child and will give birth."
+ trait_omegaverse_carrying_child_character_desc:0 "[ROOT.Char.GetFirstNameNoTooltip] is carrying a child."
+
+ # ==========================================
+ # ALPHAS
+ # ==========================================
+ trait_omegaverse_dominant_alpha:0 "Dominant Alpha"
+ trait_omegaverse_dominant_alpha_desc:0 "Possessing an intense aura, [ROOT.Char.GetFirstNameNoTooltip] naturally dominates social hierarchies."
+
+ trait_omegaverse_standard_alpha:0 "Alpha"
+ trait_omegaverse_standard_alpha_desc:0 "Assertive and naturally driven to protect and lead, [ROOT.Char.GetFirstNameNoTooltip] displays classic Alpha traits."
+
+ trait_omegaverse_recessive_alpha:0 "Recessive Alpha"
+ trait_omegaverse_recessive_alpha_desc:0 "[ROOT.Char.GetFirstNameNoTooltip] possesses Alpha instincts, but lacks an overwhelming presence."
+
+ # ==========================================
+ # BETAS
+ # ==========================================
+ trait_omegaverse_standard_beta:0 "Beta"
+ trait_omegaverse_standard_beta_desc:0 "Free from pheromones, Betas like [ROOT.Char.GetFirstNameNoTooltip] form the stable core of society."
+
+ trait_omegaverse_unstable_beta:0 "Unstable Beta"
+ trait_omegaverse_unstable_beta_desc:0 "Though currently presenting as a Beta, [ROOT.Char.GetFirstNameNoTooltip] internal biology remains unstable."
+
+ # ==========================================
+ # OMEGAS
+ # ==========================================
+ trait_omegaverse_dominant_omega:0 "Dominant Omega"
+ trait_omegaverse_dominant_omega_desc:0 "[ROOT.Char.GetFirstNameNoTooltip] commands an irresistible presence."
+
+ trait_omegaverse_standard_omega:0 "Omega"
+ trait_omegaverse_standard_omega_desc:0 "[ROOT.Char.GetFirstNameNoTooltip] possesses standard Omega traits, including high fertility and sensitivity to Alphas."
+
+ trait_omegaverse_recessive_omega:0 "Recessive Omega"
+ trait_omegaverse_recessive_omega_desc:0 "Carrying only subtle Omega traits, [ROOT.Char.GetHerHis] secondary gender is less obvious to the casual observer."
+
+ # ==========================================
+ # UNREVEALED SECONDARY GENDER
+ # ==========================================
+ trait_omegaverse_unrevealed_secondary_gender:0 "Unrevealed Secondary Gender"
+ trait_omegaverse_unrevealed_secondary_gender_desc:0 "[ROOT.Char.Custom('omegaverse_unrevealed_secondary_gender_desc')]"
+
+ trait_omegaverse_unrevealed_secondary_gender_desc_hints:0 "[ROOT.Char.Custom('omegaverse_hint')]"
+
+ trait_omegaverse_unrevealed_secondary_gender_desc_base:0 "The nature of [ROOT.Char.GetFirstNameNoTooltip]'s secondary gender remains unknown."
+ trait_omegaverse_unrevealed_secondary_gender_desc_empty:0 ""
+
+ # ==========================================
+ # HINTS
+ # ==========================================
+ trait_omegaverse_unrevealed_secondary_gender_desc_dominant_alpha:0 "The intensity of [ROOT.Char.GetFirstNameNoTooltip]'s presence is difficult to ignore."
+ trait_omegaverse_unrevealed_secondary_gender_desc_standard_alpha:0 "[ROOT.Char.GetFirstNameNoTooltip] seems to have a natural instinct to protect and lead."
+ trait_omegaverse_unrevealed_secondary_gender_desc_recessive_alpha:0 "In [ROOT.Char.GetFirstNameNoTooltip], the instinct to take charge is present, though rarely overwhelming."
+
+ trait_omegaverse_unrevealed_secondary_gender_desc_unstable_beta:0 "[ROOT.Char.GetFirstNameNoTooltip] has shown strangely inconsistent development."
+ trait_omegaverse_unrevealed_secondary_gender_desc_standard_beta:0 "[ROOT.Char.GetFirstNameNoTooltip] has developed in a remarkably unremarkable manner."
+
+ trait_omegaverse_unrevealed_secondary_gender_desc_dominant_omega:0 "[ROOT.Char.GetFirstNameNoTooltip] seems to possess a presence that draws an unusual amount of attention."
+ trait_omegaverse_unrevealed_secondary_gender_desc_standard_omega:0 "There is a natural warmth to [ROOT.Char.GetFirstNameNoTooltip] that tends to attract attention."
+ trait_omegaverse_unrevealed_secondary_gender_desc_recessive_omega:0 "[ROOT.Char.GetFirstNameNoTooltip] displays faint signs of a gentle and sensitive temperament."
+ 
+ # ==========================================
+ # CYCLE
+ # ==========================================
+ trait_omegaverse_in_heat_trait:0 "In Heat"
+ trait_omegaverse_in_heat_desc:0 "[ROOT.Char.GetFirstNameNoTooltip] is experiencing heat, a recurring physiological state accompanied by heightened sensitivity and restlessness. [ROOT.Char.Custom('omegaverse_heat_stage_desc')]"
+
+ trait_omegaverse_in_rut_trait:0 "In Rut"
+ trait_omegaverse_in_rut_desc:0 "[ROOT.Char.GetFirstNameNoTooltip] is experiencing rut, a recurring physiological state accompanied by heightened instincts and restlessness. [ROOT.Char.Custom('omegaverse_rut_stage_desc')]"
+
+ omegaverse_heat_stage_start:0 "\n\n[ROOT.Char.GetHerHis|U] heat is just beginning to take hold."
+ omegaverse_heat_stage_peak:0 "\n\n[ROOT.Char.GetHerHis|U] heat has reached its peak, and its effects are at their strongest."
+ omegaverse_heat_stage_ebb:0 "\n\n[ROOT.Char.GetHerHis|U] heat is subsiding as the cycle draws to a close."
+ omegaverse_heat_stage_fallback:0 ""
+
+ omegaverse_rut_stage_start:0 "\n\n[ROOT.Char.GetHerHis|U] rut is just beginning to take hold."
+ omegaverse_rut_stage_peak:0 "\n\n[ROOT.Char.GetHerHis|U] rut has reached its peak, and its effects are at their strongest."
+ omegaverse_rut_stage_ebb:0 "\n\n[ROOT.Char.GetHerHis|U] rut is subsiding as the cycle draws to a close."
+ omegaverse_rut_stage_fallback:0 ""

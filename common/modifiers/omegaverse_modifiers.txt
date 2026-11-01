@@ -1,0 +1,4 @@
+﻿omegaverse_pregnancy_suppression = {
+    fertility = -10.0
+    hide_effects = yes
+}

@@ -1,0 +1,1292 @@
+﻿namespace = omegaverse_debug
+
+# ==========================================
+# MAIN MENU
+# ==========================================
+omegaverse_debug.9000 = {
+    type = character_event
+
+    title = "DEBUG"
+
+    if = {
+        limit = {
+            NOT = {
+                exists = scope:omegaverse_debug_actor
+            }
+        }
+
+        save_scope_as = omegaverse_debug_actor
+    }
+
+    if = {
+        limit = {
+            NOT = {
+                exists = scope:omegaverse_debug_target
+            }
+        }
+
+        save_scope_as = omegaverse_debug_target
+    }
+
+    right_portrait = {
+        character = scope:omegaverse_debug_target
+    }
+
+    desc = {
+        desc = omegaverse_debug_target_desc
+
+        # traits
+        desc = {
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_trait = omegaverse_dominant_alpha
+                }
+            }
+            desc = "dominant_alpha "
+        }
+
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_trait = omegaverse_standard_alpha
+                }
+            }
+            desc = "standard_alpha "
+        }
+
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_trait = omegaverse_recessive_alpha
+                }
+            }
+            desc = "recessive_alpha "
+        }
+
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_trait = omegaverse_standard_beta
+                }
+            }
+            desc = "standard_beta "
+        }
+
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_trait = omegaverse_unstable_beta
+                }
+            }
+            desc = "unstable_beta "
+        }
+
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_trait = omegaverse_dominant_omega
+                }
+            }
+            desc = "dominant_omega "
+        }
+
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_trait = omegaverse_standard_omega
+                }
+            }
+            desc = "standard_omega "
+        }
+
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_trait = omegaverse_recessive_omega
+                }
+            }
+            desc = "recessive_omega "
+        }
+
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_trait = omegaverse_unrevealed_secondary_gender
+                }
+            }
+            desc = "unrevealed_secondary_gender "
+        }            
+        }
+
+        # state
+        desc = {
+            desc = omegaverse_debug_nl
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_secondary_gender_hidden
+                    }
+                }
+                desc = "secondary_gender_hidden "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_secondary_gender_revealed
+                    }
+                }
+                desc = "secondary_gender_revealed "
+            }
+        }
+
+        # destiny
+        desc = {
+            desc = omegaverse_debug_nl
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_destined_alpha
+                    }
+                }
+                desc = "destined_alpha "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_destined_beta
+                    }
+                }
+                desc = "destined_beta "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_destined_omega
+                    }
+                }
+                desc = "destined_omega "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_destined_dominant
+                    }
+                }
+                desc = "destined_dominant "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_destined_recessive
+                    }
+                }
+                desc = "destined_recessive "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_destined_standard
+                    }
+                }
+                desc = "destined_standard "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_hint_received
+                    }
+                }
+                desc = "hint_received "
+            }
+        }
+
+        # trait flags
+        desc = {
+            desc = omegaverse_debug_nl
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_secondary_gender
+                    }
+                }
+                desc = "secondary_gender "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_alpha_gender
+                    }
+                }
+                desc = "alpha_gender "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_beta_gender
+                    }
+                }
+                desc = "beta_gender "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_omega_gender
+                    }
+                }
+                desc = "omega_gender "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_dominant_subtrait
+                    }
+                }
+                desc = "dominant_subtrait "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_recessive_subtrait
+                    }
+                }
+                desc = "recessive_subtrait "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_standard_subtrait
+                    }
+                }
+                desc = "standard_subtrait "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_can_sire
+                    }
+                }
+                desc = "can_sire "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_cannot_bear
+                    }
+                }
+                desc = "cannot_bear "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_can_bear
+                    }
+                }
+                desc = "can_bear "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_cannot_sire
+                    }
+                }
+                desc = "cannot_sire "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_can_sire_if_male_beta
+                    }
+                }
+                desc = "can_sire_if_male_beta "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait_with_flag = omegaverse_can_bear_if_female_beta
+                    }
+                }
+                desc = "can_bear_if_female_beta "
+            }  
+        }
+
+        # genealogy
+        desc = {
+            desc = omegaverse_debug_nl
+            desc = {
+                first_valid = {       
+                    triggered_desc = {
+                        trigger = {
+                            scope:omegaverse_debug_target = {
+                                has_variable_list = omegaverse_parents
+                            }
+                        }
+                        desc = "parents_list_exists "
+                    }
+                    desc = "no_parent_list "
+                }
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        exists = var:omegaverse_bearer
+                        exists = var:omegaverse_sire
+                    }
+                }
+                desc = "both_parents_exist "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        exists = var:omegaverse_bearer
+                    }
+                }
+                desc = "bearer_exists "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        exists = var:omegaverse_sire
+                    }
+                }
+                desc = "sire_exists "
+            }
+        }
+
+        # pregnancy
+        desc = {
+            desc = omegaverse_debug_nl
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait = omegaverse_carrying_child
+                    }
+                }
+                desc = "omegaverse_pregnant"
+            }
+        
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        is_pregnant = yes
+                    }
+                }
+                desc = "vanilla_pregnant"
+            }
+    
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_bearer_will_become_ill
+                    }
+                }
+                desc = "omegaverse_bearer_will_become_ill"
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_child_will_become_sickly
+                    }
+                }
+                desc = "omegaverse_child_will_become_sickly"
+            }
+        
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_bearer_will_die
+                    }
+                }
+                desc = "omegaverse_bearer_will_die"
+            }
+        }
+
+        # cycle
+        desc = {
+            desc = omegaverse_debug_nl
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_in_heat
+                    }
+                }
+                desc = "in_heat "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait = omegaverse_in_heat_trait
+                    }
+                }
+                desc = "has_heat_trait "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_in_rut
+                    }
+                }
+                desc = "in_rut "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_trait = omegaverse_in_rut_trait
+                    }
+                }
+                desc = "has_rut_trait "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_cycle_chain_active
+                    }
+                }
+                desc = "cycle_chain_active "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_cycle_start
+                    }
+                }
+                desc = "cycle_start "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_cycle_peak
+                    }
+                }
+                desc = "cycle_peak "
+            }
+
+            triggered_desc = {
+                trigger = {
+                    scope:omegaverse_debug_target = {
+                        has_character_flag = omegaverse_cycle_ebbed
+                    }
+                }
+                desc = "cycle_ebb "
+            }
+        }
+    }
+
+    option = {
+        name = "CLEAR TRAIT"
+
+        scope:omegaverse_debug_target = {
+            omegaverse_clear_destiny = yes
+            omegaverse_clear_pregnancy = yes
+
+            remove_character_flag = omegaverse_abo_determined
+            remove_character_flag = omegaverse_dsr_determined
+
+            remove_character_flag = omegaverse_secondary_gender_revealed
+
+
+            remove_trait = omegaverse_dominant_alpha
+            remove_trait = omegaverse_standard_alpha
+            remove_trait = omegaverse_recessive_alpha
+
+            remove_trait = omegaverse_standard_beta
+            remove_trait = omegaverse_unstable_beta
+
+            remove_trait = omegaverse_dominant_omega
+            remove_trait = omegaverse_standard_omega
+            remove_trait = omegaverse_recessive_omega
+
+            remove_trait = omegaverse_in_rut_trait
+            remove_trait = omegaverse_in_heat_trait
+
+            remove_character_flag = omegaverse_cycle_start
+            remove_character_flag = omegaverse_cycle_peak
+            remove_character_flag = omegaverse_cycle_ebbed
+            
+            remove_character_flag = omegaverse_in_heat
+            remove_character_flag = omegaverse_in_rut
+            remove_character_flag = omegaverse_cycle_chain_active
+
+            remove_character_flag = omegaverse_first_cycle
+            remove_character_flag = omegaverse_had_first_cycle
+
+
+            if = {
+                limit = {
+                    NOT = {
+                        has_trait = omegaverse_unrevealed_secondary_gender
+                    }
+                }
+
+                add_trait = omegaverse_unrevealed_secondary_gender
+            }
+
+            add_character_flag = omegaverse_secondary_gender_hidden
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9000
+        }
+    }
+
+    option = {
+        name = "MANIFESTATION"
+
+        trigger_event = {
+            id = omegaverse_debug.9001
+        }
+    }
+
+    option = {
+        name = "PREGNANCY"
+
+        trigger_event = {
+            id = omegaverse_debug.9003
+        }
+    }
+
+    option = {
+        name = "CYCLE"
+
+        trigger_event = {
+            id = omegaverse_debug.9004
+        }
+    }
+
+    option = {
+        name = "OK"
+    }
+}
+
+# ==========================================
+# SECONDARY GENDER
+# ==========================================
+omegaverse_debug.9001 = {
+    type = character_event
+
+    title = "SECONDARY GENDER"
+
+    option = {
+        trigger = {
+            scope:omegaverse_debug_target = {
+                has_character_flag = omegaverse_abo_determined
+            }
+        } 
+
+        name = "CLEAR"
+
+        scope:omegaverse_debug_target = {
+            omegaverse_clear_destiny = yes
+
+            remove_character_flag = omegaverse_abo_determined
+            remove_character_flag = omegaverse_dsr_determined
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9001
+        }
+    }
+
+    option = {
+        trigger = {
+            scope:omegaverse_debug_target = {
+                NOT = {
+                    has_character_flag = omegaverse_abo_determined
+                }
+            }
+        } 
+        name = "ALPHA"
+
+        scope:omegaverse_debug_target = {
+            add_character_flag = omegaverse_destined_alpha
+            add_character_flag = omegaverse_abo_determined
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9001
+        }
+    }
+
+    option = {
+        trigger = {
+            scope:omegaverse_debug_target = {
+                NOT = {
+                    has_character_flag = omegaverse_abo_determined
+                }
+            }
+        } 
+
+        name = "BETA"
+
+        scope:omegaverse_debug_target = {
+            add_character_flag = omegaverse_destined_beta
+            add_character_flag = omegaverse_abo_determined
+                }
+
+        trigger_event = {
+            id = omegaverse_debug.9001
+        }
+    }
+
+    option = {
+        trigger = {
+            scope:omegaverse_debug_target = {
+                NOT = {
+                    has_character_flag = omegaverse_abo_determined
+                }
+            }
+        } 
+
+        name = "OMEGA"
+
+        scope:omegaverse_debug_target = {
+            add_character_flag = omegaverse_destined_omega
+            add_character_flag = omegaverse_abo_determined
+
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9001
+        }
+    }
+
+    option = {
+        trigger = {
+            scope:omegaverse_debug_target = {
+                has_character_flag = omegaverse_abo_determined
+                NOT = {
+                    has_character_flag = omegaverse_dsr_determined
+                }
+            }
+        } 
+
+        name = "DOMINANT"
+
+        scope:omegaverse_debug_target = {
+            add_character_flag = omegaverse_destined_dominant
+            add_character_flag = omegaverse_dsr_determined
+
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9001
+        }
+    }
+
+    option = {
+        trigger = {
+            scope:omegaverse_debug_target = {
+                has_character_flag = omegaverse_abo_determined
+                NOT = {
+                    has_character_flag = omegaverse_dsr_determined
+                }
+            }
+        } 
+
+        name = "RECESSIVE"
+
+        scope:omegaverse_debug_target = {
+            add_character_flag = omegaverse_destined_recessive
+            add_character_flag = omegaverse_dsr_determined
+
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9001
+        }
+    }
+
+    option = {
+        trigger = {
+            scope:omegaverse_debug_target = {
+                has_character_flag = omegaverse_abo_determined
+                NOT = {
+                    has_character_flag = omegaverse_dsr_determined
+                }
+            }
+        } 
+
+        name = "STANDARD"
+
+        scope:omegaverse_debug_target = {
+            add_character_flag = omegaverse_destined_standard
+            add_character_flag = omegaverse_dsr_determined
+
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9001
+        }
+    }
+
+    option = {
+        name = "HINT"
+
+        trigger = {
+            scope:omegaverse_debug_target = {
+                has_trait = omegaverse_unrevealed_secondary_gender
+            }
+        }
+
+        scope:omegaverse_debug_target = {
+            trigger_event = {
+                id = omegaverse_manifestation.4000
+            }
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9001
+        }
+    }
+
+
+    option = {
+        trigger = {
+            scope:omegaverse_debug_target = {
+                has_trait = omegaverse_unrevealed_secondary_gender
+            }
+        }
+
+        name = "MANIFEST"
+
+        scope:omegaverse_debug_target = {
+            trigger_event = {
+                id = omegaverse_manifestation.0001
+            }
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9000
+        }
+    }
+
+
+    option = {
+        name = "BACK"
+
+        trigger_event = {
+            id = omegaverse_debug.9000
+        }
+    }
+
+    option = {
+        name = "OK"
+    }
+}
+
+# ==========================================
+# PREGNANCY
+# ==========================================
+omegaverse_debug.9003 = {
+    type = character_event
+
+    title = "PREGNANCY"
+
+    right_portrait = {
+        character = scope:omegaverse_debug_target
+    }
+
+    immediate = {
+        clear_saved_scope = debug_unchecked_sex_memory
+        clear_saved_scope = debug_sex_partner
+        clear_saved_scope = debug_test_bearer
+        clear_saved_scope = debug_test_sire
+
+        scope:omegaverse_debug_target = {
+            ordered_memory = {
+                limit = {
+                    has_memory_type = had_sex
+
+                    any_memory_participant = {
+                        this != scope:omegaverse_debug_target
+                    }
+                }
+
+                order_by = memory_creation_date
+                position = 0
+
+                save_scope_as = debug_unchecked_sex_memory
+            }
+        }
+
+        remove_variable = debug_sex_memory_age_days
+
+        if = {
+            limit = {
+                exists = scope:debug_unchecked_sex_memory
+            }
+
+            set_variable = {
+                name = debug_sex_memory_age_days
+                value = {
+                    value = current_date
+                    subtract = scope:debug_unchecked_sex_memory.memory_creation_date
+                }
+            }
+
+            scope:debug_unchecked_sex_memory = {
+                random_memory_participant = {
+                    limit = {
+                        this != scope:omegaverse_debug_target
+                    }
+
+                    save_scope_as = debug_sex_partner
+                }
+            }
+        }
+
+        clear_saved_scope = debug_pregnancy_partner
+
+        if = {
+            limit = {
+                exists = scope:omegaverse_debug_target.var:omegaverse_sire
+            }
+
+            scope:omegaverse_debug_target.var:omegaverse_sire = {
+                save_scope_as = debug_pregnancy_partner
+            }
+        }
+
+        if = {
+            limit = {
+                exists = scope:debug_sex_partner
+
+                scope:omegaverse_debug_target = {
+                    omegaverse_can_bear_trigger = yes
+                }
+
+                scope:debug_sex_partner = {
+                    omegaverse_can_sire_trigger = yes
+                }
+            }
+
+            scope:omegaverse_debug_target = {
+                save_scope_as = debug_test_bearer
+            }
+
+            scope:debug_sex_partner = {
+                save_scope_as = debug_test_sire
+            }
+        }
+
+        else_if = {
+            limit = {
+                exists = scope:debug_sex_partner
+
+                scope:debug_sex_partner = {
+                    omegaverse_can_bear_trigger = yes
+                }
+
+                scope:omegaverse_debug_target = {
+                    omegaverse_can_sire_trigger = yes
+                }
+            }
+
+            scope:debug_sex_partner = {
+                save_scope_as = debug_test_bearer
+            }
+
+            scope:omegaverse_debug_target = {
+                save_scope_as = debug_test_sire
+            }
+        }
+
+        remove_variable = debug_conception_age_days
+
+        if = {
+            limit = {
+                exists = scope:omegaverse_debug_target.var:omegaverse_conception_date
+            }
+
+            set_variable = {
+                name = debug_conception_age_days
+                value = {
+                    value = current_date
+                    subtract = scope:omegaverse_debug_target.var:omegaverse_conception_date
+                }
+            }
+        }
+    }
+
+    desc = {
+        triggered_desc = {
+            trigger = {
+                exists = scope:debug_sex_partner
+            }
+            desc = "last_debug_sex_partner:[debug_sex_partner.GetFullName]"
+        }
+
+        triggered_desc = {
+            trigger = {
+                exists = scope:debug_pregnancy_partner
+            }
+            desc = "pregnancy_partner:[debug_pregnancy_partner.GetFullName]"
+        }
+
+        desc = omegaverse_debug_nl
+        triggered_desc = {
+            trigger = {
+                exists = scope:debug_unchecked_sex_memory
+            }
+            desc = "unchecked_sex_memory"
+        }
+
+        triggered_desc = {
+            trigger = {
+                exists = var:debug_sex_memory_age_days
+            }
+            desc = "sex_memory_age:[ROOT.Var('debug_sex_memory_age_days').GetValue]"
+        }
+
+        desc = omegaverse_debug_nl
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_trait = omegaverse_carrying_child
+                }
+            }
+            desc = "omegaverse_pregnant"
+        }
+
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    is_pregnant = yes
+                }
+            }
+            desc = "vanilla_pregnant"
+        }
+
+        triggered_desc = {
+            trigger = {
+                exists = var:debug_conception_age_days
+            }
+            desc = "conception_age:[ROOT.Var('debug_conception_age_days').GetValue]"
+        }
+
+        desc = omegaverse_debug_nl
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    omegaverse_can_bear_trigger = yes
+                }
+            }
+            desc = "can_bear "
+        }
+
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    omegaverse_can_sire_trigger = yes
+                }
+            }
+            desc = "can_sire "
+        }
+
+        triggered_desc = {
+            trigger = {
+                exists = scope:debug_test_bearer
+                exists = scope:debug_test_sire
+            }
+            desc = "custom_pregnancy "
+        }  
+
+                desc = omegaverse_debug_nl
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_character_flag = omegaverse_bearer_will_become_ill
+                }
+            }
+            desc = "omegaverse_bearer_will_become_ill"
+        }
+
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_character_flag = omegaverse_child_will_become_sickly
+                }
+            }
+            desc = "omegaverse_child_will_become_sickly"
+        }
+            
+        triggered_desc = {
+            trigger = {
+                scope:omegaverse_debug_target = {
+                    has_character_flag = omegaverse_bearer_will_die
+                }
+            }
+            desc = "omegaverse_bearer_will_die"
+        }
+    }
+
+    option = {
+        name = "CLEAR DATA"
+
+        scope:omegaverse_debug_target = {
+            omegaverse_clear_pregnancy = yes
+            remove_character_flag = omegaverse_bearer_will_die
+        }
+
+        remove_variable = debug_sex_memory_age_days
+
+        trigger_event = {
+            id = omegaverse_debug.9003
+        }
+    }
+
+    option = {
+        name = "RANDOM BEARER"
+
+        random_living_character = {
+            limit = {
+                NOT = {
+                    this = scope:omegaverse_debug_target
+                }
+
+                is_adult = yes
+                omegaverse_can_bear_trigger = yes
+            }
+
+            save_scope_as = debug_random_sex_partner
+        }
+
+        scope:omegaverse_debug_target = {
+            had_sex_with_effect = {
+                CHARACTER = scope:debug_random_sex_partner
+                PREGNANCY_CHANCE = 0
+            }
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9003
+        }
+    }
+
+    option = {
+        name = "RANDOM SIRE"
+
+        random_living_character = {
+            limit = {
+                NOT = {
+                    this = scope:omegaverse_debug_target
+                }
+
+                is_adult = yes
+                omegaverse_can_sire_trigger = yes
+            }
+
+            save_scope_as = debug_random_sex_partner
+        }
+
+        scope:omegaverse_debug_target = {
+            had_sex_with_effect = {
+                CHARACTER = scope:debug_random_sex_partner
+                PREGNANCY_CHANCE = 0
+            }
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9003
+        }
+    }
+
+    option = {
+        name = "SEX WITH PLAYER"
+
+        trigger = {
+            scope:omegaverse_debug_actor = {
+                NOT = {
+                    this = scope:omegaverse_debug_target
+                }
+            }
+        }
+
+        scope:omegaverse_debug_target = {
+            had_sex_with_effect = {
+                CHARACTER = scope:omegaverse_debug_actor
+                PREGNANCY_CHANCE = 0
+            }
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9003
+        }
+    }
+
+    option = {
+        name = "ILL CHILD"
+
+        trigger = {
+            scope:omegaverse_debug_target = {
+                has_trait = omegaverse_carrying_child
+            }
+        }
+
+        scope:omegaverse_debug_target = {
+            add_character_flag = omegaverse_child_will_become_sickly
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9003
+        }
+    }
+
+    option = {
+        name = "ILL BEARER"
+
+        trigger = {
+            scope:omegaverse_debug_target = {
+                has_trait = omegaverse_carrying_child
+            }
+        }
+
+        scope:omegaverse_debug_target = {
+            add_character_flag = omegaverse_bearer_will_become_ill
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9003
+        }
+    }
+
+    option = {
+        name = "BEARER WILL DIE"
+
+        trigger = {
+            scope:omegaverse_debug_target = {
+                has_trait = omegaverse_carrying_child
+            }
+        }
+
+        scope:omegaverse_debug_target = {
+            add_character_flag = omegaverse_bearer_will_die
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9003
+        }
+    }
+
+    option = {
+        name = "BACK"
+
+        trigger_event = {
+            id = omegaverse_debug.9000
+        }
+    }
+
+    option = {
+        name = "OK"
+    }
+}
+ 
+# ==========================================
+# CYCLE
+# ==========================================
+omegaverse_debug.9004 = {
+    type = character_event
+    title = "CYCLE DEBUG"
+
+    right_portrait = {
+        character = scope:omegaverse_debug_target
+    }
+
+    option = {
+        name = "SCHEDULE"
+
+        scope:omegaverse_debug_target = {
+            omegaverse_schedule_cycle = yes
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9004
+        }
+    }
+
+    option = {
+        name = "RUT TRAIT"
+
+        trigger = {
+            scope:omegaverse_debug_target = {
+                has_trait_with_flag = omegaverse_alpha_gender
+            }
+        }
+        add_trait = omegaverse_in_rut_traitt
+    }
+    option = {
+        name = "HEAT TRAIT"
+
+        trigger = {
+            scope:omegaverse_debug_target = {
+                has_trait_with_flag = omegaverse_omega_gender
+            }
+        }
+        add_trait = omegaverse_in_heat_trait
+    }
+
+    option = {
+        name = "CLEAR"
+
+        scope:omegaverse_debug_target = {
+            remove_character_flag = omegaverse_cycle_start
+            remove_character_flag = omegaverse_cycle_peak
+            remove_character_flag = omegaverse_cycle_ebbed
+            
+            remove_character_flag = omegaverse_in_heat
+            remove_character_flag = omegaverse_in_rut
+            remove_character_flag = omegaverse_cycle_chain_active
+
+            remove_character_flag = omegaverse_first_cycle
+            remove_character_flag = omegaverse_had_first_cycle
+
+            remove_trait = omegaverse_in_rut_trait
+            remove_trait = omegaverse_in_heat_trait
+        }
+
+        trigger_event = {
+            id = omegaverse_debug.9004
+        }
+    }
+
+    option = {
+        name = "BACK"
+
+        trigger_event = {
+            id = omegaverse_debug.9000
+        }
+    }
+
+    option = {
+        name = "OK"
+    }
+}

@@ -1,0 +1,256 @@
+﻿omegaverse_unrevealed_secondary_gender_desc = {
+    type = character
+    
+    text = {
+        trigger = {
+            NOT = {
+                has_character_flag = omegaverse_hint_received
+            }
+        }
+        localization_key = trait_omegaverse_unrevealed_secondary_gender_desc_base
+    }
+
+    text = {
+        localization_key = trait_omegaverse_unrevealed_secondary_gender_desc_hints
+        fallback = yes
+    }
+}
+
+# braindead 
+omegaverse_hint = {
+    type = character
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_hint_dominant_alpha
+        }
+        localization_key = trait_omegaverse_unrevealed_secondary_gender_desc_dominant_alpha
+    }
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_hint_standard_alpha
+        }
+        localization_key = trait_omegaverse_unrevealed_secondary_gender_desc_standard_alpha
+    }
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_hint_recessive_alpha
+        }
+        localization_key = trait_omegaverse_unrevealed_secondary_gender_desc_recessive_alpha
+    }
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_hint_unstable_beta
+        }
+        localization_key = trait_omegaverse_unrevealed_secondary_gender_desc_unstable_beta
+    }
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_hint_standard_beta
+        }
+        localization_key = trait_omegaverse_unrevealed_secondary_gender_desc_standard_beta
+    }
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_hint_dominant_omega
+        }
+        localization_key = trait_omegaverse_unrevealed_secondary_gender_desc_dominant_omega
+    }
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_hint_standard_omega
+        }
+        localization_key = trait_omegaverse_unrevealed_secondary_gender_desc_standard_omega
+    }
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_hint_recessive_omega
+        }
+        localization_key = trait_omegaverse_unrevealed_secondary_gender_desc_recessive_omega
+    }
+
+    text = {
+        localization_key = trait_omegaverse_unrevealed_secondary_gender_desc_empty
+        fallback = yes
+    }
+}
+
+omegaverse_manifestation_desc = {
+    type = character
+
+    text = {
+        trigger = {
+            has_trait = omegaverse_dominant_alpha
+        }
+        localization_key = omegaverse_manifestation_desc_dominant_alpha
+    }
+
+    text = {
+        trigger = {
+            has_trait = omegaverse_standard_alpha
+        }
+        localization_key = omegaverse_manifestation_desc_standard_alpha
+    }
+
+    text = {
+        trigger = {
+            has_trait = omegaverse_recessive_alpha
+        }
+        localization_key = omegaverse_manifestation_desc_recessive_alpha
+    }
+
+    text = {
+        trigger = {
+            has_trait = omegaverse_unstable_beta
+        }
+        localization_key = omegaverse_manifestation_desc_unstable_beta
+    }
+
+    text = {
+        trigger = {
+            has_trait = omegaverse_standard_beta
+        }
+        localization_key = omegaverse_manifestation_desc_standard_beta
+    }
+
+    text = {
+        trigger = {
+            has_trait = omegaverse_dominant_omega
+        }
+        localization_key = omegaverse_manifestation_desc_dominant_omega
+    }
+
+    text = {
+        trigger = {
+            has_trait = omegaverse_standard_omega
+        }
+        localization_key = omegaverse_manifestation_desc_standard_omega
+    }
+
+    text = {
+        trigger = {
+            has_trait = omegaverse_recessive_omega
+        }
+        localization_key = omegaverse_manifestation_desc_recessive_omega
+    }
+
+    text = {
+        localization_key = omegaverse_manifestation_desc_fallback
+        fallback = yes
+    }
+}
+
+omegaverse_parent_manifestation_desc = {
+    type = character
+
+    text = {
+        trigger = { has_trait = omegaverse_dominant_alpha }
+        localization_key = omegaverse_parent_manifestation_desc_dominant_alpha
+    }
+
+    text = {
+        trigger = { has_trait = omegaverse_standard_alpha }
+        localization_key = omegaverse_parent_manifestation_desc_standard_alpha
+    }
+
+    text = {
+        trigger = { has_trait = omegaverse_recessive_alpha }
+        localization_key = omegaverse_parent_manifestation_desc_recessive_alpha
+    }
+
+    text = {
+        trigger = { has_trait = omegaverse_unstable_beta }
+        localization_key = omegaverse_parent_manifestation_desc_unstable_beta
+    }
+
+    text = {
+        trigger = { has_trait = omegaverse_standard_beta }
+        localization_key = omegaverse_parent_manifestation_desc_standard_beta
+    }
+
+    text = {
+        trigger = { has_trait = omegaverse_dominant_omega }
+        localization_key = omegaverse_parent_manifestation_desc_dominant_omega
+    }
+
+    text = {
+        trigger = { has_trait = omegaverse_standard_omega }
+        localization_key = omegaverse_parent_manifestation_desc_standard_omega
+    }
+
+    text = {
+        trigger = { has_trait = omegaverse_recessive_omega }
+        localization_key = omegaverse_parent_manifestation_desc_recessive_omega
+    }
+
+    text = {
+        localization_key = omegaverse_parent_manifestation_desc_fallback
+        fallback = yes
+    }
+}
+
+omegaverse_heat_stage_desc = {
+    type = character
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_cycle_start
+        }
+        localization_key = omegaverse_heat_stage_start
+    }
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_cycle_peak
+        }
+        localization_key = omegaverse_heat_stage_peak
+    }
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_cycle_ebbed
+        }
+        localization_key = omegaverse_heat_stage_ebb
+    }
+
+    text = {
+        localization_key = omegaverse_heat_stage_fallback
+        fallback = yes
+    }
+}
+
+omegaverse_rut_stage_desc = {
+    type = character
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_cycle_start
+        }
+        localization_key = omegaverse_rut_stage_start
+    }
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_cycle_peak
+        }
+        localization_key = omegaverse_rut_stage_peak
+    }
+
+    text = {
+        trigger = {
+            has_character_flag = omegaverse_cycle_ebbed
+        }
+        localization_key = omegaverse_rut_stage_ebb
+    }
+
+    text = {
+        localization_key = omegaverse_rut_stage_fallback
+        fallback = yes
+    }
+}

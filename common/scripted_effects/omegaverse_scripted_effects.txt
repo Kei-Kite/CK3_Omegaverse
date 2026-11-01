@@ -1,0 +1,1149 @@
+﻿# ======================================
+# PIPELINE -> update this pls
+#
+# determine_abo
+#   determine_subtype
+#       
+# reveal_secondary_gender
+#   apply_destined_abo
+#   update_pregnancy_suppression
+#
+# ensure_abo
+#   basic_abo_roll
+#   basic_sub_roll
+#   apply_destined_abo
+#   remove_destiny_character_flags
+#   update_pregnancy_suppression
+# 
+# assign_vanilla_child_abo
+#   determine_abo
+# 
+# clear_destiny
+# clear_pregnancy
+# ======================================
+
+# ==========================================
+# INIT SETUP
+# ==========================================
+omegaverse_initial_setup = {
+    every_living_character = {
+        limit = {
+            is_adult = yes
+
+            NOT = {
+                has_trait_with_flag = omegaverse_secondary_gender
+            }
+
+            NOT = {
+                has_trait = omegaverse_unrevealed_secondary_gender
+            }
+        }
+
+        # pregnant - no alpha
+        if = {
+            limit = {
+                is_pregnant = yes
+            }
+
+            random_list = {
+                50 = { add_trait = omegaverse_standard_beta }
+                40 = { add_trait = omegaverse_standard_omega }
+                5 = { add_trait = omegaverse_recessive_omega }
+                5 = { add_trait = omegaverse_dominant_omega }
+            }
+        }
+
+        # adults w children (no male omega, no fem alpha)
+        # i should change this depending on game rules, no?
+        else_if = {
+            limit = {
+                any_child = {
+                    always = yes
+                }
+            }
+
+            if = {
+                limit = {
+                    is_male = yes
+                }
+
+                random_list = {
+                    50 = { add_trait = omegaverse_standard_beta }
+                    40 = { add_trait = omegaverse_standard_alpha }
+                    5 = { add_trait = omegaverse_recessive_alpha }
+                    5 = { add_trait = omegaverse_dominant_alpha }
+                }
+            }
+
+            else_if = {
+                limit = {
+                    is_female = yes
+                }
+
+                random_list = {
+                    50 = { add_trait = omegaverse_standard_beta }
+                    40 = { add_trait = omegaverse_standard_omega }
+                    5 = { add_trait = omegaverse_recessive_omega }
+                    5 = { add_trait = omegaverse_dominant_omega }
+                }
+            }
+        }
+
+        # childless adult - any
+        else = {
+            random_list = {
+                2 = { add_trait = omegaverse_dominant_alpha }
+                3 = { add_trait = omegaverse_recessive_alpha }
+                10 = { add_trait = omegaverse_standard_alpha }
+                70 = { add_trait = omegaverse_standard_beta }
+                10 = { add_trait = omegaverse_standard_omega }
+                3 = { add_trait = omegaverse_recessive_omega }
+                2 = { add_trait = omegaverse_dominant_omega }
+            }
+        }
+
+        add_character_flag = omegaverse_secondary_gender_revealed
+        omegaverse_update_pregnancy_suppression = yes
+        omegaverse_schedule_cycle = yes
+    }
+
+    every_living_character = {
+        limit = {
+            is_adult = no
+            NOT = {
+                has_trait_with_flag = omegaverse_secondary_gender
+            }
+
+            NOT = {
+                has_trait = omegaverse_unrevealed_secondary_gender
+            }
+        }
+
+        if = {
+            limit = {
+                exists = root.father
+            }
+
+            root.father = {
+                save_scope_as = biological_father
+            }
+        }
+
+        if = {
+            limit = {
+                exists = root.mother
+            }
+
+            root.mother = {
+                save_scope_as = biological_bearer
+            }
+        }
+
+        omegaverse_determine_abo = yes
+
+        add_trait = omegaverse_unrevealed_secondary_gender
+        add_character_flag = omegaverse_secondary_gender_hidden
+
+        # can never be reached. good
+        if = {
+            limit = {
+                age >= 16
+            }
+
+            omegaverse_reveal_secondary_gender = yes
+        }
+    }
+}
+
+# ======================================
+# TRAIT GENETICS
+#
+# Pair:  A / B / O  % for child
+# A+O   40% / 20% / 40%
+# A+B   55% / 35% / 10%
+# B+O   10% / 35% / 55%
+# B+B   10% / 80% / 10%
+# ======================================
+omegaverse_determine_abo = {
+    omegaverse_clear_destiny = yes
+
+    add_character_flag = omegaverse_secondary_gender_hidden
+
+    # parent gender checks
+    if = {
+        limit = {
+            exists = var:omegaverse_sire
+            exists = var:omegaverse_bearer
+
+            var:omegaverse_sire = {
+                has_trait_with_flag = omegaverse_alpha_gender
+            }
+
+            var:omegaverse_bearer = {
+                has_trait_with_flag = omegaverse_omega_gender
+            }
+        }
+
+        random_list = {
+            40 = {
+                add_character_flag = omegaverse_destined_alpha
+            }
+            20 = {
+                add_character_flag = omegaverse_destined_beta
+            }
+            40 = {
+                add_character_flag = omegaverse_destined_omega
+            }
+        }
+    }
+
+    else_if = {
+        limit = {
+            exists = var:omegaverse_sire
+            exists = var:omegaverse_bearer
+
+            var:omegaverse_sire = {
+                has_trait_with_flag = omegaverse_alpha_gender
+            }
+
+            var:omegaverse_bearer = {
+                has_trait_with_flag = omegaverse_beta_gender
+            }
+        }
+
+        random_list = {
+            55 = {
+                add_character_flag = omegaverse_destined_alpha
+            }
+            35 = {
+                add_character_flag = omegaverse_destined_beta
+            }
+            10 = {
+                add_character_flag = omegaverse_destined_omega
+            }
+        }
+    }
+
+    else_if = {
+        limit = {
+            exists = var:omegaverse_sire
+            exists = var:omegaverse_bearer
+
+            var:omegaverse_sire = {
+                has_trait_with_flag = omegaverse_beta_gender
+            }
+
+            var:omegaverse_bearer = {
+                has_trait_with_flag = omegaverse_omega_gender
+            }
+        }
+
+        random_list = {
+            10 = {
+                add_character_flag = omegaverse_destined_alpha
+            }
+            35 = {
+                add_character_flag = omegaverse_destined_beta
+            }
+            55 = {
+                add_character_flag = omegaverse_destined_omega
+            }
+        }
+    }
+
+    else_if = {
+        limit = {
+            exists = var:omegaverse_sire
+            exists = var:omegaverse_bearer
+
+            var:omegaverse_sire = {
+                has_trait_with_flag = omegaverse_beta_gender
+            }
+
+            var:omegaverse_bearer = {
+                has_trait_with_flag = omegaverse_beta_gender
+            }
+        }
+
+        random_list = {
+            10 = {
+                add_character_flag = omegaverse_destined_alpha
+            }
+            80 = {
+                add_character_flag = omegaverse_destined_beta
+            }
+            10 = {
+                add_character_flag = omegaverse_destined_omega
+            }
+        }
+    }
+
+    # fallback
+    else = {
+        omegaverse_basic_abo_roll = yes
+    }
+
+    # subtype
+    omegaverse_determine_subtype = yes
+}
+
+# ======================================
+# SUBTYPE GENETICS
+#
+# Pair:  D / S / R  % for child
+# D+D   80% / 15% / 5%
+# D+R   25% / 50% / 25%
+# R+R   5%  / 15% / 80%
+# D+S   45% / 50% / 5%
+# R+S   5%  / 50% / 45%
+# S+S   10% / 80% / 10%
+# ======================================
+omegaverse_determine_subtype = {
+    # dom + dom
+    if = {
+        limit = {
+            exists = var:omegaverse_sire
+            exists = var:omegaverse_bearer
+
+            var:omegaverse_sire = {
+                has_trait_with_flag = omegaverse_dominant_subtrait
+            }
+
+            var:omegaverse_bearer = {
+                has_trait_with_flag = omegaverse_dominant_subtrait
+            }
+        }
+
+        random_list = {
+            80 = {
+                add_character_flag = omegaverse_destined_dominant
+            }
+            15 = {
+                add_character_flag = omegaverse_destined_standard
+            }
+            5 = {
+                add_character_flag = omegaverse_destined_recessive
+            }
+        }
+    }
+
+    # dom + rec
+    else_if = {
+        limit = {
+            exists = var:omegaverse_sire
+            exists = var:omegaverse_bearer
+
+            OR = {
+                AND = {
+                    var:omegaverse_sire = {
+                        has_trait_with_flag = omegaverse_dominant_subtrait
+                    }
+
+                    var:omegaverse_bearer = {
+                        has_trait_with_flag = omegaverse_recessive_subtrait
+                    }
+                }
+
+                AND = {
+                    var:omegaverse_sire = {
+                        has_trait_with_flag = omegaverse_recessive_subtrait
+                    }
+
+                    var:omegaverse_bearer = {
+                        has_trait_with_flag = omegaverse_dominant_subtrait
+                    }
+                }
+            }
+        }
+
+        random_list = {
+            25 = {
+                add_character_flag = omegaverse_destined_dominant
+            }
+            50 = {
+                add_character_flag = omegaverse_destined_standard
+            }
+            25 = {
+                add_character_flag = omegaverse_destined_recessive
+            }
+        }
+    }
+
+    # rec + rec
+    else_if = {
+        limit = {
+            exists = var:omegaverse_sire
+            exists = var:omegaverse_bearer
+
+            var:omegaverse_sire = {
+                has_trait_with_flag = omegaverse_recessive_subtrait
+            }
+
+            var:omegaverse_bearer = {
+                has_trait_with_flag = omegaverse_recessive_subtrait
+            }
+        }
+
+        random_list = {
+            5 = {
+                add_character_flag = omegaverse_destined_dominant
+            }
+            15 = {
+                add_character_flag = omegaverse_destined_standard
+            }
+            80 = {
+                add_character_flag = omegaverse_destined_recessive
+            }
+        }
+    }
+
+    # dom + stan
+    else_if = {
+        limit = {
+            exists = var:omegaverse_sire
+            exists = var:omegaverse_bearer
+
+            OR = {
+                AND = {
+                    var:omegaverse_sire = {
+                        has_trait_with_flag = omegaverse_dominant_subtrait
+                    }
+
+                    var:omegaverse_bearer = {
+                        has_trait_with_flag = omegaverse_standard_subtrait
+                    }
+                }
+
+                AND = {
+                    var:omegaverse_bearer = {
+                        has_trait_with_flag = omegaverse_dominant_subtrait
+                    }
+
+                    var:omegaverse_sire = {
+                        has_trait_with_flag = omegaverse_standard_subtrait
+                    }
+                }
+            }
+        }
+
+        random_list = {
+            45 = {
+                add_character_flag = omegaverse_destined_dominant
+            }
+            50 = {
+                add_character_flag = omegaverse_destined_standard
+            }
+            5 = {
+                add_character_flag = omegaverse_destined_recessive
+            }
+        }
+    }
+
+    # rec + stan
+    else_if = {
+        limit = {
+            exists = var:omegaverse_sire
+            exists = var:omegaverse_bearer
+
+            OR = {
+                AND = {
+                    var:omegaverse_sire = {
+                        has_trait_with_flag = omegaverse_recessive_subtrait
+                    }
+
+                    var:omegaverse_bearer = {
+                        has_trait_with_flag = omegaverse_standard_subtrait
+                    }
+                }
+
+                AND = {
+                    var:omegaverse_bearer = {
+                        has_trait_with_flag = omegaverse_recessive_subtrait
+                    }
+
+                    var:omegaverse_sire = {
+                        has_trait_with_flag = omegaverse_standard_subtrait
+                    }
+                }
+            }
+        }
+
+        random_list = {
+            5 = {
+                add_character_flag = omegaverse_destined_dominant
+            }
+            50 = {
+                add_character_flag = omegaverse_destined_standard
+            }
+            45 = {
+                add_character_flag = omegaverse_destined_recessive
+            }
+        }
+    }
+
+    # stan + stan -> fallback
+    else = {
+        omegaverse_basic_sub_roll = yes
+    }
+}
+
+# ======================================
+# BASIC ABO ROLL
+#
+# fallback if no parents or plain
+# 15% / 70% / 15%
+# ======================================
+omegaverse_basic_abo_roll = {
+    random_list = {
+        15 = {
+            add_character_flag = omegaverse_destined_alpha
+        }
+        70 = {
+            add_character_flag = omegaverse_destined_beta
+        }
+        15 = {
+            add_character_flag = omegaverse_destined_omega
+        }
+    }
+}
+
+# ======================================
+# BASIC SUBTYPE ROLL
+#
+# fallback basically
+# 10% / 80% / 10%
+# ======================================
+omegaverse_basic_sub_roll = {
+    random_list = {
+        10 = {
+            add_character_flag = omegaverse_destined_dominant
+        }
+        80 = {
+            add_character_flag = omegaverse_destined_standard
+        }
+        10 = {
+            add_character_flag = omegaverse_destined_recessive
+        }
+    }
+}
+
+# ======================================
+# ENSURE ABO ASSIGNMENT
+# 
+# fallback
+# only if char doesnt have the hidden 
+# trait OR any gender trait (flag)
+# ======================================
+omegaverse_ensure_abo = {
+    if = {
+        limit = {
+            NOT = {
+                has_trait_with_flag = omegaverse_secondary_gender
+            }
+
+            NOT = {
+                has_trait = omegaverse_unrevealed_secondary_gender
+            }
+        }
+
+        # adults go thru reveal
+        if = {
+            limit = {
+                age >= 16
+            }
+            omegaverse_reveal_secondary_gender = yes
+        }
+
+        else = {
+            omegaverse_determine_abo = yes
+            add_trait = omegaverse_unrevealed_secondary_gender
+            add_character_flag = omegaverse_secondary_gender_hidden
+        }
+    }
+}
+
+# ======================================
+# VANILLA GENETICS
+# ======================================
+omegaverse_assign_vanilla_child_abo = {
+    if = {
+        limit = {
+            NOT = {
+                has_trait_with_flag = omegaverse_secondary_gender
+            }
+
+            NOT = {
+                has_trait = omegaverse_unrevealed_secondary_gender
+            }
+        }
+
+
+        if = {
+            limit = {
+                exists = mother
+            }
+
+            set_variable = {
+                name = omegaverse_bearer
+                value = mother
+            }
+
+            mother = {
+                add_to_variable_list = {
+                    name = omegaverse_children
+                    target = root
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                exists = father
+            }
+
+            set_variable = {
+                name = omegaverse_sire
+                value = father
+            }
+
+            father = {
+                add_to_variable_list = {
+                    name = omegaverse_children
+                    target = root
+                }
+            }
+        }
+
+        clear_variable_list = omegaverse_parents
+
+        if = {
+            limit = {
+                exists = var:omegaverse_bearer
+            }
+
+            add_to_variable_list = {
+                name = omegaverse_parents
+                target = var:omegaverse_bearer
+            }
+        }
+
+        if = {
+            limit = {
+                exists = var:omegaverse_sire
+            }
+
+            add_to_variable_list = {
+                name = omegaverse_parents
+                target = var:omegaverse_sire
+            }
+        }
+
+        omegaverse_determine_abo = yes
+
+        add_trait = omegaverse_unrevealed_secondary_gender
+        add_character_flag = omegaverse_secondary_gender_hidden
+    }
+}
+
+# ======================================
+# DESTINY APPLICATION
+# 
+# does not remove anything!
+# ======================================
+omegaverse_apply_destined_abo = {
+    if = {
+        limit = {
+            has_character_flag = omegaverse_destined_alpha
+            has_character_flag = omegaverse_destined_dominant
+        }
+
+        add_trait = omegaverse_dominant_alpha
+    }
+
+    else_if = {
+        limit = {
+            has_character_flag = omegaverse_destined_alpha
+            has_character_flag = omegaverse_destined_recessive
+        }
+
+        add_trait = omegaverse_recessive_alpha
+    }
+
+    else_if = {
+        limit = {
+            has_character_flag = omegaverse_destined_alpha
+            has_character_flag = omegaverse_destined_standard
+            
+        }
+
+        add_trait = omegaverse_standard_alpha
+    }
+
+    else_if = {
+        limit = {
+            has_character_flag = omegaverse_destined_beta
+            OR = {
+                has_character_flag = omegaverse_destined_dominant
+                has_character_flag = omegaverse_destined_recessive
+            }
+        }
+
+        add_trait = omegaverse_unstable_beta
+    }
+
+    else_if = {
+        limit = {
+            has_character_flag = omegaverse_destined_beta
+            has_character_flag = omegaverse_destined_standard
+        }
+
+        add_trait = omegaverse_standard_beta
+    }
+
+    else_if = {
+        limit = {
+            has_character_flag = omegaverse_destined_omega
+            has_character_flag = omegaverse_destined_dominant
+        }
+
+        add_trait = omegaverse_dominant_omega
+    }
+
+    else_if = {
+        limit = {
+            has_character_flag = omegaverse_destined_omega
+            has_character_flag = omegaverse_destined_recessive
+        }
+
+        add_trait = omegaverse_recessive_omega
+    }
+
+    else_if = {
+        limit = {
+            has_character_flag = omegaverse_destined_omega
+            has_character_flag = omegaverse_destined_standard
+        }
+
+        add_trait = omegaverse_standard_omega
+    }
+}
+
+# ======================================
+# VALIDATE DESTINY
+# ======================================
+omegaverse_ensure_valid_destiny = {
+    if = {
+        limit = {
+            NOT = {
+                OR = {
+                    has_character_flag = omegaverse_destined_alpha
+                    has_character_flag = omegaverse_destined_beta
+                    has_character_flag = omegaverse_destined_omega
+                }
+            }
+        }
+
+        omegaverse_determine_abo = yes
+    }
+
+    else_if = {
+        limit = {
+            NOT = {
+                OR = {
+                    has_character_flag = omegaverse_destined_dominant
+                    has_character_flag = omegaverse_destined_standard
+                    has_character_flag = omegaverse_destined_recessive
+                }
+            }
+        }
+
+        omegaverse_determine_subtype = yes
+    }
+}
+
+# ======================================
+# GENDER REVEAL
+# ======================================
+omegaverse_reveal_secondary_gender = {
+    omegaverse_ensure_valid_destiny = yes
+    
+    omegaverse_apply_destined_abo = yes 
+    
+    remove_trait = omegaverse_unrevealed_secondary_gender
+
+    omegaverse_clear_destiny = yes
+
+    add_character_flag = omegaverse_secondary_gender_revealed
+
+    omegaverse_update_pregnancy_suppression = yes
+
+    omegaverse_schedule_cycle = yes
+}
+
+# ======================================
+# ASSIGN MANIFESTATION HINT
+# ======================================
+omegaverse_give_manifestation_hint = {
+    if = {
+        limit = {
+            NOT = {
+                has_character_flag = omegaverse_hint_received
+            }
+        }
+
+        add_character_flag = omegaverse_hint_received
+
+        if = {
+            limit = {
+                has_character_flag = omegaverse_destined_alpha
+                has_character_flag = omegaverse_destined_dominant
+            }
+
+            add_character_flag = omegaverse_hint_dominant_alpha
+        }
+
+        else_if = {
+            limit = {
+                has_character_flag = omegaverse_destined_alpha
+                has_character_flag = omegaverse_destined_recessive
+            }
+
+            add_character_flag = omegaverse_hint_recessive_alpha
+        }
+
+        else_if = {
+            limit = {
+                has_character_flag = omegaverse_destined_alpha
+                has_character_flag = omegaverse_destined_standard
+            }
+
+            add_character_flag = omegaverse_hint_standard_alpha
+        }
+
+        # unstable beta
+        else_if = {
+            limit = {
+                has_character_flag = omegaverse_destined_beta
+                OR = {
+                    has_character_flag = omegaverse_destined_dominant
+                    has_character_flag = omegaverse_destined_recessive
+                }
+            }
+
+            add_character_flag = omegaverse_hint_unstable_beta
+        }
+
+        else_if = {
+            limit = {
+                has_character_flag = omegaverse_destined_beta
+                has_character_flag = omegaverse_destined_standard
+            }
+
+            add_character_flag = omegaverse_hint_standard_beta
+        }
+
+        else_if = {
+            limit = {
+                has_character_flag = omegaverse_destined_omega
+                has_character_flag = omegaverse_destined_dominant
+            }
+
+            add_character_flag = omegaverse_hint_dominant_omega
+        }
+
+        else_if = {
+            limit = {
+                has_character_flag = omegaverse_destined_omega
+                has_character_flag = omegaverse_destined_recessive
+            }
+
+            add_character_flag = omegaverse_hint_recessive_omega
+        }
+
+        else_if = {
+            limit = {
+                has_character_flag = omegaverse_destined_omega
+                has_character_flag = omegaverse_destined_standard
+            }
+
+            add_character_flag = omegaverse_hint_standard_omega
+        }
+    }
+}
+
+# ==========================================
+# CYCLE SCHEDULER
+# ==========================================
+omegaverse_schedule_cycle = {
+    if = {
+        limit = {
+            is_alive = yes
+            is_adult = yes
+
+            NOT = {
+                has_character_flag = omegaverse_cycle_chain_active
+            }
+
+            OR = {
+                has_trait = omegaverse_dominant_alpha
+                has_trait = omegaverse_standard_alpha
+                has_trait = omegaverse_recessive_alpha
+
+                has_trait = omegaverse_dominant_omega
+                has_trait = omegaverse_standard_omega
+                has_trait = omegaverse_recessive_omega
+            }
+        }
+
+        add_character_flag = omegaverse_cycle_chain_active
+
+        trigger_event = {
+            id = omegaverse_cycle.0010
+            months = { 6 18 }
+        }
+    }
+}
+
+# ==========================================
+# PREGNANCY SUPPRESSION
+# ==========================================
+omegaverse_update_pregnancy_suppression = {
+    remove_character_modifier = omegaverse_pregnancy_suppression
+
+    if = {
+        limit = {
+            OR = {
+                AND = {
+                    is_male = yes
+                    has_trait_with_flag = omegaverse_omega_gender
+                }
+
+                AND = {
+                    is_female = yes
+                    has_trait_with_flag = omegaverse_alpha_gender
+                }
+            }
+        }
+
+        add_character_modifier = omegaverse_pregnancy_suppression
+    }
+}
+
+# ==========================================
+# CONCEPTION CHANCE CALCULATOR
+#
+# wip bc idk good rates aahah
+# need to sync it w conception processor?
+# ==========================================
+omegaverse_calculate_pregnancy_chance = {
+    # base from bearer sub
+    if = {
+        limit = {
+            scope:omegaverse_conception_bearer = {
+                has_trait_with_flag = omegaverse_recessive_subtrait
+            }
+        }
+
+        set_variable = {
+            name = omegaverse_pregnancy_chance
+            value = 20
+        }
+    }
+    else_if = {
+        limit = {
+            scope:omegaverse_conception_bearer = {
+                has_trait_with_flag = omegaverse_standard_subtrait
+            }
+        }
+
+        set_variable = {
+            name = omegaverse_pregnancy_chance
+            value = 30
+        }
+    }
+    else_if = {
+        limit = {
+            scope:omegaverse_conception_bearer = {
+                has_trait_with_flag = omegaverse_dominant_subtrait
+            }
+        }
+
+        set_variable = {
+            name = omegaverse_pregnancy_chance
+            value = 40
+        }
+    }
+    else = {
+        set_variable = {
+            name = omegaverse_pregnancy_chance
+            value = 30
+        }
+    }
+
+    # bearer cycle peak case
+    if = {
+        limit = {
+            scope:omegaverse_conception_bearer = {
+                has_character_flag = omegaverse_cycle_peak
+                has_character_flag = omegaverse_in_heat
+            }
+        }
+
+        set_variable = {
+            name = omegaverse_pregnancy_chance
+            value = 100
+        }
+    }
+
+    else = {
+        # sire subtrait
+        if = {
+            limit = {
+                scope:omegaverse_conception_sire = {
+                    has_trait_with_flag = omegaverse_recessive_subtrait
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 0.9
+            }
+        }
+        else_if = {
+            limit = {
+                scope:omegaverse_conception_sire = {
+                    has_trait_with_flag = omegaverse_dominant_subtrait
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.3
+            }
+        }
+
+        # bearer cycle 
+        if = {
+            limit = {
+                scope:omegaverse_conception_bearer = {
+                    has_character_flag = omegaverse_cycle_start
+                    has_character_flag = omegaverse_in_heat
+
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.5
+            }
+        }
+
+        else_if = {
+            limit = {
+                scope:omegaverse_conception_bearer = {
+                    has_character_flag = omegaverse_cycle_ebbed
+                    has_character_flag = omegaverse_in_heat
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.2
+            }
+        }
+
+        # sire cycle
+        if = {
+            limit = {
+                scope:omegaverse_conception_sire = {
+                    has_character_flag = omegaverse_cycle_start
+                    has_character_flag = omegaverse_in_rut
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.2
+            }
+        }
+        else_if = {
+            limit = {
+                scope:omegaverse_conception_sire = {
+                    has_character_flag = omegaverse_cycle_peak
+                    has_character_flag = omegaverse_in_rut
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.4
+            }
+        }
+        else_if = {
+            limit = {
+                scope:omegaverse_conception_sire = {
+                    has_character_flag = omegaverse_cycle_ebbed
+                    has_character_flag = omegaverse_in_rut
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.1
+            }
+        }
+
+        # cap
+        if = {
+            limit = {
+                var:omegaverse_pregnancy_chance >= 100
+            }
+
+            set_variable = {
+                name = omegaverse_pregnancy_chance
+                value = 100
+            }
+        }
+    }
+}
+
+# ==========================================
+# PREGNANCY CLEAN UP
+# ==========================================
+omegaverse_clear_pregnancy = {
+    remove_trait = omegaverse_carrying_child
+
+    remove_character_flag = omegaverse_pregnancy_pending
+    remove_character_flag = omegaverse_unborn_female
+    remove_character_flag = omegaverse_unborn_male
+    remove_character_flag = omegaverse_pregnancy_will_go_smoothly
+    remove_character_flag = omegaverse_child_will_become_sickly
+    remove_character_flag = omegaverse_bearer_will_become_ill
+
+    remove_variable = omegaverse_conception_date
+}
+
+# ======================================
+# REMOVE DESTINY FLAGS
+# ======================================
+omegaverse_clear_destiny = {
+    remove_character_flag = omegaverse_destined_alpha
+    remove_character_flag = omegaverse_destined_beta
+    remove_character_flag = omegaverse_destined_omega
+
+    remove_character_flag = omegaverse_destined_dominant
+    remove_character_flag = omegaverse_destined_recessive
+    remove_character_flag = omegaverse_destined_standard
+
+    remove_character_flag = omegaverse_hint_received
+    remove_character_flag = omegaverse_hint_dominant_alpha
+    remove_character_flag = omegaverse_hint_standard_alpha
+    remove_character_flag = omegaverse_hint_recessive_alpha
+    remove_character_flag = omegaverse_hint_unstable_beta
+    remove_character_flag = omegaverse_hint_standard_beta
+    remove_character_flag = omegaverse_hint_dominant_omega
+    remove_character_flag = omegaverse_hint_standard_omega
+    remove_character_flag = omegaverse_hint_recessive_omega
+
+    remove_character_flag = omegaverse_secondary_gender_hidden
+}

@@ -1,0 +1,10 @@
+version="1.0.0"
+name="Omegaverse"
+tags={
+	"Fantasy"
+	"Gameplay"
+	"Events"
+}
+picture="thumbnail.png"
+supported_version="1.20.1.2"
+remote_file_id="3826478379"

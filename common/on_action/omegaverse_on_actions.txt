@@ -1,0 +1,148 @@
+﻿on_game_start_after_lobby = {
+    on_actions = {
+		omegaverse_initialization
+	} 
+}
+
+omegaverse_initialization = {
+    effect = {
+        omegaverse_initial_setup = yes
+    }
+}
+
+on_birth_child = { 
+	on_actions = {
+		omegaverse_vanilla_genetics 
+	} 
+} 
+
+omegaverse_vanilla_genetics = {
+    effect = {
+        omegaverse_assign_vanilla_child_abo = yes
+    }
+}
+
+on_16th_birthday = { 
+	on_actions = {
+        delay = {
+            months = 1
+        }
+
+		omegaverse_manifestation_action 
+	} 
+} 
+
+omegaverse_manifestation_action = {
+    events = {
+        omegaverse_manifestation.0001
+    }
+}
+
+on_10th_birthday = {
+    on_actions = {
+        delay = {
+            months = 3
+        }
+
+        omegaverse_hint_action
+    }
+}
+
+omegaverse_hint_action = {
+    events = {
+        omegaverse_manifestation.4000
+    }
+}
+
+on_join_court = {
+    on_actions = {
+        omegaverse_ensure_abo_action
+    }
+}
+
+on_guest_arrived_from_pool = {
+    on_actions = {
+        omegaverse_ensure_abo_action
+    }
+}
+
+omegaverse_ensure_abo_action = {
+    effect = {
+        omegaverse_ensure_abo = yes
+    }
+}
+
+# conception pulse
+quarterly_playable_pulse = {
+    on_actions = {
+        omegaverse_conception_pulse
+
+        delay = {
+            months = 1
+        }
+
+        omegaverse_conception_pulse
+
+        delay = {
+            months = 2
+        }
+
+        omegaverse_conception_pulse
+    }
+}
+
+omegaverse_conception_pulse = {
+    trigger = {
+        is_adult = yes
+        NOT = {
+            has_trait = omegaverse_carrying_child
+        }
+        NOT = {
+            has_character_flag = omegaverse_pregnancy_pending
+        }
+    }
+
+    events = {
+        omegaverse_pregnancy.0010
+    }
+}
+
+# absolute fallback
+random_yearly_everyone_pulse = {
+    on_actions = {
+        omegaverse_abo_fallback_pulse
+        omegaverse_manifestation_fallback_pulse
+        omegaverse_cycle_fallback_pulse
+    }
+}
+
+omegaverse_abo_fallback_pulse = {
+    effect = {
+        omegaverse_ensure_abo = yes
+        # omegaverse_schedule_cycle = yes
+    }
+}
+
+omegaverse_manifestation_fallback_pulse = {
+    trigger = {
+        age > 16
+        has_trait = omegaverse_unrevealed_secondary_gender
+    }
+
+    effect = {
+        omegaverse_reveal_secondary_gender = yes
+    }
+}
+
+omegaverse_cycle_fallback_pulse = {
+    trigger = {
+        age > 16
+        NOT = {
+            has_character_flag = omegaverse_cycle_chain_active
+        }
+    }
+
+    effect = {
+        omegaverse_schedule_cycle = yes
+    }
+}

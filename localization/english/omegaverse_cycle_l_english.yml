@@ -1,0 +1,49 @@
+﻿l_english:
+ # ==========================================
+ # FIRST RUT
+ # ==========================================
+ omegaverse_cycle.1010.t:0 "The First Rut"
+ omegaverse_cycle.1010.d:0 "Something is changing. \nA restless energy has settled beneath your skin, making stillness difficult and sharpening your awareness of the world around you. \n\nScents linger longer than they should, and even the smallest irritations seem harder to ignore. \nYou have heard of ruts before, but knowing of them is not the same as experiencing one yourself. \nThis is your first. Over the coming weeks, the sensations will intensify, reach their peak, and eventually begin to fade. \n\nFor now, all you can do is learn to recognize what your body is telling you."
+ omegaverse_cycle.1010.a:0 "So this is what a rut feels like."
+
+ omegaverse_cycle.1020.t:0 "The Rut at Its Peak"
+ omegaverse_cycle.1020.d:0 "The restless energy that marked the beginning of your rut has become impossible to ignore. \n\nEvery scent seems more pronounced, every distraction more persistent and even the simplest routines demand more effort than they should. \n\nFinding a moment of peace feels increasingly difficult. \nYour rut has reached its peak. The intensity will not last forever, but knowing that offers little comfort while you are caught in its grip. \n\nAll you can do is endure this stage and wait for your body to settle once more."
+ omegaverse_cycle.1020.a:0 "One day at a time."
+
+ omegaverse_cycle.1030.t:0 "The Rut Begins to Ease"
+ omegaverse_cycle.1030.d:0 "At last, the relentless intensity begins to loosen its hold. \n\nThe restless agitation has not disappeared entirely, but it does not dominates your every waking moment as it once did. \nThe change is gradual, almost imperceptible at first, yet the difference becomes harder to deny. \n\nYour rut has entered its final stage, and its end is finally within sight. \n\nYou are not through it just yet, but at least the worst seems to be behind you."
+ omegaverse_cycle.1030.a:0 "At last, some relief."
+
+ omegaverse_cycle.1040.t:0 "The First Rut Ends"
+ omegaverse_cycle.1040.d:0 "The restless pressure has finally faded. \n\nYour senses settle, the agitation subsides, and the world begins to feel familiar again. \nOrdinary routines no longer require quite so much effort, and you can finally think of something other than enduring the next moment. \n\nYour first rut is over. \nWhat once seemed unfamiliar and difficult to understand has become an experience you can recognize, even if you would hardly call it pleasant. \n\nWhen it happens again, at least you will know what to expect."
+ omegaverse_cycle.1040.a:0 "Next time, I will know what to expect."
+
+ # ==========================================
+ # FIRST HEAT
+ # ==========================================
+ omegaverse_cycle.1011.t:0 "The First Heat"
+ omegaverse_cycle.1011.d:0 "Something unfamiliar is stirring within you. \nA persistent warmth settles over your body, your skin seems more sensitive than usual, and scents that once passed unnoticed linger in your awareness. \n\nEven ordinary sensations feel strangely difficult to ignore. \nYou may have heard others speak of heat, but hearing about it is hardly the same as experiencing it yourself. \nThere is no mistaking what is happening. \nYour first heat has begun. \n\nOver the coming weeks, the sensations will grow more intense before gradually subsiding. \nLearning to recognize the rhythm of your own body will take time. \n\nFor now, you can only take things as they come."
+ omegaverse_cycle.1011.a:0 "I suppose I had to experience it eventually."
+
+ omegaverse_cycle.1021.t:0 "The Heat at Its Peak"
+ omegaverse_cycle.1021.d:0 "The warmth that had been building within you has reached its height. \n\nYour skin feels almost unbearably sensitive, every passing scent demands your attention, and ordinary discomforts are becoming increasingly difficult to dismiss. \n\nThere is little point in pretending this is merely an unfamiliar inconvenience. Your heat has reached its most intense stage, leaving you painfully aware of every sensation your body produces. \n\nIt will eventually begin to ease, but not yet. \nUntil then, patience may be your only comfort."
+ omegaverse_cycle.1021.a:0 "I can only wait for it to pass."
+
+ omegaverse_cycle.1031.t:0 "The Heat Begins to Ease"
+ omegaverse_cycle.1031.d:0 "The intensity that once seemed all-consuming is finally beginning to recede. \n\nYour skin is no longer quite so sensitive, the persistent warmth has become more manageable, and the world no longer feels quite so overwhelming. \n\nThe change is gradual, but unmistakable. Your heat has entered its final stage, and the end is drawing closer. \n\nThere is still some time before it passes completely, but for the first time in days, returning to your ordinary routine feels like a real possibility."
+ omegaverse_cycle.1031.a:0 "I can finally breathe."
+
+ omegaverse_cycle.1041.t:0 "The First Heat Ends"
+ omegaverse_cycle.1041.d:0 "At last, the persistent warmth and heightened sensitivity begin to fade. \n\nYour body settles back into its familiar rhythms, leaving behind a lingering tiredness and the strange impression of having endured something that is difficult to explain to anyone who has never experienced it. \n\nYour first heat is over. In time, another will come, but the uncertainty of this first experience will not return in quite the same way. \nYou know a little more about your own body now, and perhaps that knowledge will make the next cycle easier to bear. \n\nFor now, you can finally return to your usual routine."
+ omegaverse_cycle.1041.a:0 "At least I know what to expect now."
+
+ # ==========================================
+ # RECURRING
+ # ==========================================
+ omegaverse_cycle.1012.t:0 "Rut Again"
+ omegaverse_cycle.1012.d:0 "Something is changing. \nYou know this feeling. A sense of unease washes over you. \n\nFor now, all you can do is accept the changes in your body."
+ omegaverse_cycle.1012.a:0 "So my rut is starting again."
+
+ omegaverse_cycle.1013.t:0 "Heat Again"
+ omegaverse_cycle.1013.d:0 "Something is changing. \nYou know this feeling. A sense of unease washes over you. \n\nFor now, all you can do is accept the changes in your body."
+ omegaverse_cycle.1013.a:0 "So my heat is starting again."

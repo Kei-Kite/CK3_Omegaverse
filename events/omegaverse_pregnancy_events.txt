@@ -1,0 +1,530 @@
+﻿namespace = omegaverse_pregnancy
+
+# ==========================================
+# EVENT INDEX
+#
+# 0010 - conception memory
+# 0011 - conception attempt
+# 0012 - pregnancy becomes apparent
+# 1001 - bearer: pregnant notif
+# 1002 - sire: partner is pregnant
+# 2101 - pregnancy ends prematurely
+# ==========================================
+
+# ==========================================
+# CONCEPTION MEMORY PROCESSOR
+#
+# checks char memory for all
+# sex encounters in the last 30 days
+# goes through them, checks omegaverse
+# compatibility and attempts conception
+# ==========================================
+omegaverse_pregnancy.0010 = {
+    type = character_event
+    hidden = yes
+
+    immediate = {
+        clear_saved_scope = omegaverse_conception_sex_memory
+        clear_saved_scope = omegaverse_conception_partner
+        clear_saved_scope = omegaverse_conception_bearer
+        clear_saved_scope = omegaverse_conception_sire
+
+        ordered_memory = {
+            limit = {
+                has_memory_type = had_sex
+
+                NOT = {
+                    has_variable = omegaverse_conception_checked
+                }
+
+                memory_creation_date >= {
+                    value = current_date
+                    subtract = 30
+                }
+
+                any_memory_participant = {
+                    this != root
+                }
+            }
+
+            order_by = memory_creation_date
+            position = 0
+
+            save_scope_as = omegaverse_conception_sex_memory
+        }
+
+        if = {
+            limit = {
+                exists = scope:omegaverse_conception_sex_memory
+            }
+
+            # every memory is checked exactly once
+            scope:omegaverse_conception_sex_memory = {
+                set_variable = {
+                    name = omegaverse_conception_checked
+                    value = yes
+                }
+
+                random_memory_participant = {
+                    limit = {
+                        this != root
+                    }
+
+                    save_scope_as = omegaverse_conception_partner
+                }
+            }
+
+            # root bears, partner sires
+            if = {
+                limit = {
+                    exists = scope:omegaverse_conception_partner
+
+                    omegaverse_can_bear_trigger = yes
+
+                    scope:omegaverse_conception_partner = {
+                        omegaverse_can_sire_trigger = yes
+                    }
+                }
+
+                save_scope_as = omegaverse_conception_bearer
+
+                scope:omegaverse_conception_partner = {
+                    save_scope_as = omegaverse_conception_sire
+                }
+            }
+
+            # partner bears, root sires
+            else_if = {
+                limit = {
+                    exists = scope:omegaverse_conception_partner
+
+                    omegaverse_can_sire_trigger = yes
+
+                    scope:omegaverse_conception_partner = {
+                        omegaverse_can_bear_trigger = yes
+                    }
+                }
+
+                scope:omegaverse_conception_partner = {
+                    save_scope_as = omegaverse_conception_bearer
+                }
+
+                save_scope_as = omegaverse_conception_sire
+            }
+
+            # vanilla handles female bearer + male sire
+            # so only custom pairs go to conception attempt
+            if = {
+                limit = {
+                    omegaverse_needs_custom_pregnancy_trigger = yes
+                }
+
+                trigger_event = {
+                    id = omegaverse_pregnancy.0011
+                }
+            }
+        }
+    }
+}
+
+# ==========================================
+# CONCEPTION ATTEMPT
+#
+# starts pregnancy and determines
+# whether it will continue normally or
+# develop complications
+# infertility trigger checked in 0001
+# fert calc in effects, random roll = chance
+# ==========================================
+omegaverse_pregnancy.0011 = {
+    type = character_event
+    hidden = yes
+
+    immediate = {
+        if = {
+            limit = {
+                scope:omegaverse_conception_bearer = {
+                    is_pregnant = no
+
+                    NOT = {
+                        has_trait = omegaverse_carrying_child
+                        has_character_flag = omegaverse_pregnancy_pending
+                    }
+                }
+            }
+
+            scope:omegaverse_conception_bearer = {
+                omegaverse_calculate_pregnancy_chance = yes
+               
+                random = {
+                    chance = var:omegaverse_pregnancy_chance
+               
+                    # cleaning old child scope bc cleaning afterwards is ass
+                    if = {
+                        limit = {
+                            has_variable = omegaverse_child
+                        }
+
+                        remove_variable = omegaverse_child
+                    }
+
+                    remove_character_flag = omegaverse_unborn_male
+                    remove_character_flag = omegaverse_unborn_female
+
+                    add_character_flag = omegaverse_pregnancy_pending
+                    
+                    set_variable = {
+                        name = omegaverse_bearer
+                        value = scope:omegaverse_conception_bearer
+                    }
+
+                    # later omegaverse_real_sire....
+                    set_variable = {
+                        name = omegaverse_sire
+                        value = scope:omegaverse_conception_sire
+                    }
+
+                    set_variable = {
+                        name = omegaverse_conception_date
+                        value = scope:omegaverse_conception_sex_memory.memory_creation_date
+                    }
+
+                    # used by birth.2001 so a stale timer cant end a newer pregnancy
+                    set_variable = {
+                        name = omegaverse_pregnancy_start
+                        value = current_date
+                    }
+
+                    random_list = {
+                        50 = {
+                            add_character_flag = omegaverse_unborn_female
+                        }
+                        50 = {
+                            add_character_flag = omegaverse_unborn_male
+                        }
+                    }
+
+                    random_list = {
+                        200 = {
+                            # all goes smoothly
+                            modifier = {
+                                health <= fine_health
+                                add = -10
+                            }
+
+                            modifier = {
+                                health <= poor_health
+                                add = -15
+                            }
+
+                            modifier = {
+                                add = 5
+                                any_child = {
+                                    even_if_dead = yes
+                                    count >= 2
+                                }
+                            }
+
+                            modifier = {
+                                add = 5
+                                any_child = {
+                                    even_if_dead = yes
+                                    count >= 4
+                                }
+                            }
+
+                            modifier = {
+                                factor = 2
+                                faith = {
+                                    has_doctrine_parameter = safer_childbirths_active
+                                }
+                            }
+
+                            modifier = {
+                                factor = 1.5
+                                has_dynasty = yes
+                                dynasty = {
+                                    has_dynasty_perk = kin_legacy_3
+                                }
+                            }
+
+                            add_character_flag = {
+                                flag = omegaverse_pregnancy_will_go_smoothly
+                                days = 270
+                            }
+                        }
+                        10 = {
+                            # ends prematurely
+                            trigger_event = {
+                                id = omegaverse_pregnancy.2101
+                                days = { 100 150 }
+                            }
+                        }
+                        3 = {
+                            # child dies
+                            trigger_event = {
+                                id = omegaverse_birth.3001
+                                days = { 180 200 }
+                            }
+                        }
+                        2 = {
+                            # bearer dies
+                            modifier = {
+                                add = -2
+                                is_ai = no
+                            }
+
+                            add_character_flag = {
+                                flag = omegaverse_bearer_will_die
+                                days = 270
+                            }
+                        }
+                        2 = {
+                            # bearer and child die
+                            modifier = {
+                                add = -2
+                                is_ai = no
+                            }
+
+                            trigger_event = {
+                                id = omegaverse_birth.3021
+                                days = { 180 200 }
+                            }
+                        }
+                        10 = {
+                            # child sickly
+                            modifier = {
+                                factor = 0.5
+                                faith = {
+                                    has_doctrine_parameter = healthier_children_active
+                                }
+                            }
+
+                            add_character_flag = {
+                                flag = omegaverse_child_will_become_sickly
+                                days = 270
+                            }
+                        }
+                        5 = {
+                            # bearer ill
+                            modifier = {
+                                add = -4
+                                is_ai = no
+                            }
+
+                            add_character_flag = {
+                                flag = omegaverse_bearer_will_become_ill
+                                days = 270
+                            }
+                        }
+                    }
+
+                    trigger_event = {
+                        id = omegaverse_pregnancy.0012
+                        days = { 35 50 }
+                    }
+
+                    trigger_event = {
+                        id = omegaverse_birth.2001
+                        days = { 240 270 }
+                    }
+                } 
+
+                remove_variable = omegaverse_pregnancy_chance
+            }
+        }
+    }
+}
+
+# ==========================================
+# PREGNANCY BECOMES APPARENT
+#
+# dispatcher
+# removes hidden pending state
+# starts visible pregnancy state
+# and notifies bearer and sire
+# ==========================================
+omegaverse_pregnancy.0012 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        has_character_flag = omegaverse_pregnancy_pending
+        exists = var:omegaverse_sire
+    }
+
+    immediate = {
+        remove_character_flag = omegaverse_pregnancy_pending
+        add_trait = omegaverse_carrying_child
+
+        # passed on to 1002 so the sire doesnt need a var for the bearer
+        save_scope_as = omegaverse_bearer
+
+        if = {
+            limit = {
+                is_ai = no
+            }
+
+            trigger_event = {
+                id = omegaverse_pregnancy.1001
+            }
+        }
+
+        var:omegaverse_sire = {
+            trigger_event = {
+                id = omegaverse_pregnancy.1002
+            }
+        }
+    }
+}
+
+# ==========================================
+# BEARER: I'M PREGNANT
+# ==========================================
+omegaverse_pregnancy.1001 = {
+    type = character_event
+
+    title = pregnancy.1001.t
+    desc = omegaverse_pregnancy.1001.d
+
+    theme = pregnancy
+    override_background = { reference = bedchamber }
+
+    left_portrait = {
+        character = root
+        animation = war_over_tie
+    }
+
+    # right_portrait = {
+    #    character = var:omegaverse_sire
+#
+#        triggered_animation = {
+#            trigger = {
+#                has_any_bad_relationship_with_character_trigger = {
+#                    CHARACTER = root
+#                }
+ #           }
+  #          animation = stress
+   #     }
+
+    #    animation = happiness
+    # }
+
+    trigger = {
+        has_trait = omegaverse_carrying_child
+        exists = var:omegaverse_sire
+    }
+
+    immediate = {
+        play_music_cue = "mx_cue_succession"
+    }
+
+    option = {
+        name = pregnancy.1001.a
+    }
+}
+
+# ==========================================
+# SIRE: PARTNER IS PREGNANT
+#
+# root is the sire, the bearer comes in
+# as scope bearer saved in 0002
+# ==========================================
+omegaverse_pregnancy.1002 = {
+    type = character_event
+
+    title = pregnancy.1002.t
+    desc = omegaverse_pregnancy.1002.d
+
+    theme = pregnancy
+    override_background = { reference = bedchamber }
+
+    left_portrait = {
+        character = scope:omegaverse_bearer
+
+        triggered_animation = {
+            trigger = {
+                has_any_bad_relationship_with_character_trigger = {
+                    CHARACTER = root
+                }
+            }
+            animation = stress
+        }
+
+        animation = happiness
+    }
+
+    right_portrait = {
+        character = root
+        animation = happiness
+    }
+
+    trigger = {
+        exists = scope:omegaverse_bearer
+
+        scope:omegaverse_bearer = {
+            has_trait = omegaverse_carrying_child
+        }
+    }
+
+    immediate = {
+        play_music_cue = "mx_cue_succession"
+    }
+
+    option = {
+        name = pregnancy.1002.a
+    }
+}
+
+# ==========================================
+# PREMATURE BIRTH
+#
+# WIP: tell sire
+# ==========================================
+omegaverse_pregnancy.2101 = {
+    type = character_event
+    title = pregnancy.2101.t
+
+    desc = {
+        random_valid = {
+            first_valid = {
+                triggered_desc = {
+                    trigger = {
+                        any_child = {
+                            even_if_dead = yes
+                            count >= 1
+                        }
+                    }
+                    desc = pregnancy.2101.desc_other_children
+                }
+                desc = pregnancy.2101.desc_pain
+            }
+            desc = pregnancy.2101.desc
+        }
+    }
+
+    theme = pregnancy
+    left_portrait = {
+        character = root
+        animation = personality_cynical
+    }
+
+    trigger = {
+        has_trait = omegaverse_carrying_child
+    }
+
+    immediate = {
+        create_character_memory = {
+            type = child_premature
+            participants = { mother = root }
+        }
+
+        omegaverse_clear_pregnancy = yes
+    }
+
+    option = {
+        name = pregnancy.2101.a
+ 
+        # TODO: Tell sire
+    }
+}

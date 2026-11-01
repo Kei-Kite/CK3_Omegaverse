@@ -1,0 +1,475 @@
+﻿# ==========================================
+# ALPHAS
+# ==========================================
+omegaverse_dominant_alpha = {
+    category = personality
+    genetic = no
+    ruler_designer_cost = 80
+    minimum_age = 16
+
+    martial = 2
+    prowess = 4
+    dread_baseline_add = 5
+
+    ai_energy = medium_positive_ai_value
+    ai_honor = low_positive_ai_value
+    ai_boldness = medium_positive_ai_value
+
+    opposites = {
+        omegaverse_standard_alpha
+        omegaverse_recessive_alpha
+        omegaverse_standard_beta
+        omegaverse_unstable_beta
+        omegaverse_dominant_omega
+        omegaverse_standard_omega
+        omegaverse_recessive_omega
+    }
+
+    compatibility = {
+        omegaverse_dominant_alpha = @neg_compat_high
+        omegaverse_standard_alpha = @neg_compat_high
+        omegaverse_recessive_alpha = @neg_compat_high
+        omegaverse_standard_beta = @pos_compat_low
+        omegaverse_unstable_beta = @pos_compat_low
+        omegaverse_dominant_omega = @pos_compat_high
+        omegaverse_standard_omega = @pos_compat_high
+        omegaverse_recessive_omega = @pos_compat_high
+    }
+
+    flag = omegaverse_secondary_gender
+    flag = omegaverse_alpha_gender
+    flag = omegaverse_dominant_subtrait
+    flag = omegaverse_can_sire
+    flag = omegaverse_cannot_bear
+
+    icon = omegaverse_dominant_alpha.dds
+    desc = trait_omegaverse_dominant_alpha_desc
+}
+
+omegaverse_standard_alpha = {
+    category = personality
+    genetic = no
+    ruler_designer_cost = 60
+    minimum_age = 16
+
+    martial = 2
+    prowess = 3
+
+    ai_energy = low_positive_ai_value
+    ai_honor = very_low_positive_ai_value
+    ai_boldness = low_positive_ai_value
+
+    opposites = {
+        omegaverse_dominant_alpha
+        omegaverse_recessive_alpha
+        omegaverse_standard_beta
+        omegaverse_unstable_beta
+        omegaverse_dominant_omega
+        omegaverse_standard_omega
+        omegaverse_recessive_omega
+    }
+
+    compatibility = {
+        omegaverse_dominant_alpha = @neg_compat_high
+        omegaverse_standard_alpha = @neg_compat_high
+        omegaverse_recessive_alpha = @neg_compat_high
+        omegaverse_standard_beta = @pos_compat_low
+        omegaverse_unstable_beta = @pos_compat_low
+        omegaverse_dominant_omega = @pos_compat_high
+        omegaverse_standard_omega = @pos_compat_high
+        omegaverse_recessive_omega = @pos_compat_high
+    }
+
+    flag = omegaverse_secondary_gender
+    flag = omegaverse_alpha_gender
+    flag = omegaverse_standard_subtrait
+    flag = omegaverse_can_sire
+    flag = omegaverse_cannot_bear
+
+    icon = omegaverse_standard_alpha.dds
+    desc = trait_omegaverse_standard_alpha_desc
+}
+
+omegaverse_recessive_alpha = {
+    category = personality
+    genetic = no
+    ruler_designer_cost = 40
+    minimum_age = 16
+
+    martial = 1
+    prowess = 2
+
+    ai_energy = very_low_positive_ai_value
+    ai_boldness = low_positive_ai_value
+
+    opposites = {
+        omegaverse_dominant_alpha
+        omegaverse_standard_alpha
+        omegaverse_standard_beta
+        omegaverse_unstable_beta
+        omegaverse_dominant_omega
+        omegaverse_standard_omega
+        omegaverse_recessive_omega
+    }
+
+    compatibility = {
+        omegaverse_dominant_alpha = @neg_compat_high
+        omegaverse_standard_alpha = @neg_compat_high
+        omegaverse_recessive_alpha = @neg_compat_high
+        omegaverse_standard_beta = @pos_compat_low
+        omegaverse_unstable_beta = @pos_compat_low
+        omegaverse_dominant_omega = @pos_compat_high
+        omegaverse_standard_omega = @pos_compat_high
+        omegaverse_recessive_omega = @pos_compat_high
+    }
+
+    flag = omegaverse_secondary_gender
+    flag = omegaverse_alpha_gender
+    flag = omegaverse_recessive_subtrait
+    flag = omegaverse_can_sire
+    flag = omegaverse_cannot_bear
+
+    icon = omegaverse_recessive_alpha.dds
+    desc = trait_omegaverse_recessive_alpha_desc
+}
+
+# ==========================================
+# BETAS
+# ==========================================
+omegaverse_standard_beta = {
+    category = personality
+    genetic = no
+    ruler_designer_cost = 0
+    minimum_age = 16
+
+    ai_rationality = medium_positive_ai_value
+
+    opposites = {
+        omegaverse_dominant_alpha
+        omegaverse_standard_alpha
+        omegaverse_recessive_alpha
+        omegaverse_unstable_beta
+        omegaverse_dominant_omega
+        omegaverse_standard_omega
+        omegaverse_recessive_omega
+    }
+
+    compatibility = {
+        omegaverse_dominant_alpha = @pos_compat_low
+        omegaverse_standard_alpha = @pos_compat_low
+        omegaverse_recessive_alpha = @pos_compat_low
+        omegaverse_standard_beta = @pos_compat_medium
+        omegaverse_unstable_beta = @pos_compat_low
+        omegaverse_dominant_omega = @pos_compat_low
+        omegaverse_standard_omega = @pos_compat_low
+        omegaverse_recessive_omega = @pos_compat_low
+    }
+
+    flag = omegaverse_secondary_gender
+    flag = omegaverse_beta_gender
+    flag = omegaverse_standard_subtrait
+    flag = omegaverse_can_sire_if_male_beta
+    flag = omegaverse_can_bear_if_female_beta
+
+    icon = omegaverse_standard_beta.dds
+    desc = trait_omegaverse_standard_beta_desc
+}
+
+omegaverse_unstable_beta = {
+    category = personality
+    genetic = no
+    ruler_designer_cost = 40
+    minimum_age = 16
+
+    ai_rationality = low_negative_ai_value
+    ai_boldness = medium_positive_ai_value
+
+    opposites = {
+        omegaverse_dominant_alpha
+        omegaverse_standard_alpha
+        omegaverse_recessive_alpha
+        omegaverse_standard_beta
+        omegaverse_dominant_omega
+        omegaverse_standard_omega
+        omegaverse_recessive_omega
+    }
+
+    compatibility = {
+        omegaverse_dominant_alpha = @pos_compat_low
+        omegaverse_standard_alpha = @pos_compat_low
+        omegaverse_recessive_alpha = @pos_compat_low
+        omegaverse_standard_beta = @pos_compat_low
+        omegaverse_unstable_beta = @pos_compat_medium
+        omegaverse_dominant_omega = @pos_compat_low
+        omegaverse_standard_omega = @pos_compat_low
+        omegaverse_recessive_omega = @pos_compat_low
+    }
+
+    flag = omegaverse_secondary_gender
+    flag = omegaverse_beta_gender
+    flag = omegaverse_dominant_subtrait
+    flag = omegaverse_recessive_subtrait
+    flag = omegaverse_can_sire_if_male_beta
+    flag = omegaverse_can_bear_if_female_beta
+
+    icon = omegaverse_unstable_beta.dds
+    desc = trait_omegaverse_unstable_beta_desc
+}
+
+# ==========================================
+# OMEGAS
+# ==========================================
+omegaverse_recessive_omega = {
+    category = personality
+    genetic = no
+    ruler_designer_cost = 40
+    minimum_age = 16
+
+    prowess = -2
+    diplomacy = 1
+
+    ai_sociability = low_negative_ai_value
+    ai_compassion = medium_positive_ai_value
+
+    opposites = {
+        omegaverse_dominant_alpha
+        omegaverse_standard_alpha
+        omegaverse_recessive_alpha
+        omegaverse_standard_beta
+        omegaverse_unstable_beta
+        omegaverse_dominant_omega
+        omegaverse_standard_omega
+    }
+
+    compatibility = {
+        omegaverse_dominant_alpha = @pos_compat_high
+        omegaverse_standard_alpha = @pos_compat_high
+        omegaverse_recessive_alpha = @pos_compat_high
+        omegaverse_standard_beta = @pos_compat_low
+        omegaverse_unstable_beta = @pos_compat_low
+        omegaverse_dominant_omega = @neg_compat_low
+        omegaverse_standard_omega = @neg_compat_low
+        omegaverse_recessive_omega = @neg_compat_low
+    }
+
+    flag = omegaverse_secondary_gender
+    flag = omegaverse_omega_gender
+    flag = omegaverse_recessive_subtrait
+    flag = omegaverse_can_bear
+    flag = omegaverse_cannot_sire
+
+    icon = omegaverse_recessive_omega.dds
+    desc = trait_omegaverse_recessive_omega_desc
+}
+
+omegaverse_standard_omega = {
+    category = personality
+    genetic = no
+    ruler_designer_cost = 60
+    minimum_age = 16
+
+    prowess = -3
+    diplomacy = 2
+    attraction_opinion = 5
+
+    ai_sociability = low_positive_ai_value
+    ai_compassion = medium_positive_ai_value
+
+    seduce_scheme_phase_duration_add = minor_scheme_phase_duration_bonus_value
+
+    opposites = {
+        omegaverse_dominant_alpha
+        omegaverse_standard_alpha
+        omegaverse_recessive_alpha
+        omegaverse_standard_beta
+        omegaverse_unstable_beta
+        omegaverse_dominant_omega
+        omegaverse_recessive_omega
+    }
+
+    compatibility = {
+        omegaverse_dominant_alpha = @pos_compat_high
+        omegaverse_standard_alpha = @pos_compat_high
+        omegaverse_recessive_alpha = @pos_compat_high
+        omegaverse_standard_beta = @pos_compat_low
+        omegaverse_unstable_beta = @pos_compat_low
+        omegaverse_dominant_omega = @neg_compat_low
+        omegaverse_standard_omega = @neg_compat_low
+        omegaverse_recessive_omega = @neg_compat_low
+    }
+
+    flag = omegaverse_secondary_gender
+    flag = omegaverse_omega_gender
+    flag = omegaverse_standard_subtrait
+    flag = omegaverse_can_bear
+    flag = omegaverse_cannot_sire
+
+    icon = omegaverse_standard_omega.dds
+    desc = trait_omegaverse_standard_omega_desc
+}
+
+omegaverse_dominant_omega = {
+    category = personality
+    genetic = no
+    ruler_designer_cost = 80
+    minimum_age = 16
+
+    prowess = -4
+    diplomacy = 3
+    attraction_opinion = 10
+
+    seduce_scheme_phase_duration_add = medium_scheme_phase_duration_bonus_value
+
+    ai_sociability = low_positive_ai_value
+    ai_compassion = low_positive_ai_value
+
+    opposites = {
+        omegaverse_dominant_alpha
+        omegaverse_standard_alpha
+        omegaverse_recessive_alpha
+        omegaverse_standard_beta
+        omegaverse_unstable_beta
+        omegaverse_standard_omega
+        omegaverse_recessive_omega
+    }
+
+    compatibility = {
+        omegaverse_dominant_alpha = @pos_compat_high
+        omegaverse_standard_alpha = @pos_compat_high
+        omegaverse_recessive_alpha = @pos_compat_high
+        omegaverse_standard_beta = @pos_compat_low
+        omegaverse_unstable_beta = @pos_compat_low
+        omegaverse_dominant_omega = @neg_compat_low
+        omegaverse_standard_omega = @neg_compat_low
+        omegaverse_recessive_omega = @neg_compat_low
+    }
+
+    flag = omegaverse_secondary_gender
+    flag = omegaverse_omega_gender
+    flag = omegaverse_dominant_subtrait
+    flag = omegaverse_can_bear
+    flag = omegaverse_cannot_sire
+
+    icon = omegaverse_dominant_omega.dds
+    desc = trait_omegaverse_dominant_omega_desc
+}
+
+# ==========================================
+# SECONDARY GENDER NOT YET REVEALED
+# ==========================================
+omegaverse_unrevealed_secondary_gender = {
+    category = personality
+    genetic = no
+    ruler_designer_cost = 0
+
+    opposites = {
+        omegaverse_dominant_alpha
+        omegaverse_standard_alpha
+        omegaverse_recessive_alpha
+        omegaverse_standard_beta
+        omegaverse_unstable_beta
+        omegaverse_dominant_omega
+        omegaverse_standard_omega
+        omegaverse_recessive_omega
+    }
+
+    icon = omegaverse_unrevealed_secondary_gender.dds
+    desc = trait_omegaverse_unrevealed_secondary_gender_desc
+}
+
+# ==========================================
+# PREGNANT
+# ==========================================
+omegaverse_carrying_child = {
+    category = health
+    genetic = no
+    shown_in_ruler_designer = no
+    minimum_age = 16
+
+    prowess = -2
+    icon = pregnant.dds
+    flag = pregnant
+
+    desc = {
+        first_valid = {
+            triggered_desc = {
+                trigger = {
+                    NOT = { exists = this }
+                }
+                desc = trait_omegaverse_carrying_child_desc
+            }
+            desc = trait_omegaverse_carrying_child_character_desc
+        }
+    }
+}
+
+# ==========================================
+# CYCLE
+# ==========================================
+omegaverse_in_heat_trait = {
+    category = health
+    genetic = no
+    shown_in_ruler_designer = no
+    minimum_age = 16
+
+    opposite_opinion = 40
+
+    attraction_opinion = 20
+
+    stress_gain_mult = 0.25
+    fertility = 0.5
+
+    ai_sociability = medium_positive_ai_value
+
+    opposites = {
+        omegaverse_in_rut_trait
+    }
+
+    compatibility = {
+        omegaverse_dominant_alpha = @pos_compat_high
+        omegaverse_standard_alpha = @pos_compat_high
+        omegaverse_recessive_alpha = @pos_compat_high
+        omegaverse_standard_beta = @pos_compat_low
+        omegaverse_unstable_beta = @pos_compat_low
+        omegaverse_dominant_omega = @neg_compat_high
+        omegaverse_standard_omega = @neg_compat_high
+        omegaverse_recessive_omega = @neg_compat_high
+    }
+
+    icon = omegaverse_cycle.dds
+    desc = trait_omegaverse_in_heat_desc
+}
+
+omegaverse_in_rut_trait = {
+    category = health
+    genetic = no
+    shown_in_ruler_designer = no
+    minimum_age = 16
+
+    opposite_opinion = 40
+
+    attraction_opinion = 20
+
+    stress_gain_mult = 0.25
+    fertility = 0.5
+
+    ai_sociability = medium_positive_ai_value
+
+    opposites = {
+        omegaverse_in_heat_trait
+    }
+
+    compatibility = {
+        omegaverse_dominant_alpha = @neg_compat_high
+        omegaverse_standard_alpha = @neg_compat_high
+        omegaverse_recessive_alpha = @neg_compat_high
+        omegaverse_standard_beta = @pos_compat_low
+        omegaverse_unstable_beta = @pos_compat_low
+        omegaverse_dominant_omega = @pos_compat_high
+        omegaverse_standard_omega = @pos_compat_high
+        omegaverse_recessive_omega = @pos_compat_high
+    }
+
+    icon = omegaverse_cycle.dds
+    desc = trait_omegaverse_in_rut_desc
+}

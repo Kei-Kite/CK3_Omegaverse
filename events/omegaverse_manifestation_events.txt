@@ -1,0 +1,259 @@
+﻿namespace = omegaverse_manifestation
+
+# ==========================================
+# EVENT INDEX
+#
+# 0001 - manifestation
+# 0010 - hint processor
+# 1001 - child
+# 1002 - child
+# ==========================================
+
+# ==========================================
+# MANIFESTATION PROCESSOR
+# ==========================================
+omegaverse_manifestation.0001 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        has_trait = omegaverse_unrevealed_secondary_gender
+        age >= 16
+    }
+
+    immediate = {
+        save_scope_as = omegaverse_child
+        save_scope_as = child
+
+        omegaverse_reveal_secondary_gender = yes
+
+        if = {
+            limit = {
+                is_ai = no
+            }
+
+            trigger_event = {
+                id = omegaverse_manifestation.0002
+            }
+        }
+
+        else = {
+            limit = {
+                is_ai = yes
+            }
+
+            every_in_list = {
+                variable = omegaverse_parents
+
+                limit = {
+                    is_ai = no
+                }
+
+                trigger_event = {
+                    id = omegaverse_manifestation.0003
+                }
+            }
+        }
+    }
+}
+
+# ==========================================
+# CHILD MANIFESTATION EVENT
+# ==========================================
+omegaverse_manifestation.0002 = {
+    type = character_event
+
+    title = omegaverse_manifestation.0002.t
+    desc = omegaverse_manifestation.0002.d
+
+    theme = healthcare
+
+    right_portrait = {
+        character = root
+        animation = happiness
+    }
+
+    option = {
+        name = omegaverse_manifestation.0002.a
+    }
+}
+
+# ==========================================
+# PARENT MANIFESTATION EVENT
+# ==========================================
+omegaverse_manifestation.0003 = {
+    type = character_event
+
+    title = omegaverse_manifestation.0003.t
+    desc = omegaverse_manifestation.0003.d
+
+    theme = healthcare
+
+    right_portrait = {
+        character = scope:omegaverse_child
+        animation = happiness
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_manifestation.0003.a
+    }
+}
+
+# ==========================================
+# HINT PROCESSOR
+# ==========================================
+omegaverse_manifestation.4000 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        has_trait = omegaverse_unrevealed_secondary_gender
+
+        NOT = {
+            has_character_flag = omegaverse_hint_received
+        }
+    }
+
+    immediate = {
+        save_scope_as = omegaverse_child
+        save_scope_as = child
+
+        omegaverse_ensure_valid_destiny = yes
+        omegaverse_give_manifestation_hint = yes
+        
+        # child player
+        if = {
+            limit = {
+                is_ai = no
+            }
+
+            random_list = {
+                50 = {
+                    trigger_event = {
+                        id = omegaverse_manifestation.4010
+                    }
+                }
+                50 = {
+                    trigger_event = {
+                        id = omegaverse_manifestation.4011
+                    }
+                }
+            }
+        }
+
+        else = {
+            every_in_list = {
+                variable = omegaverse_parents
+
+                limit = {
+                    is_ai = no
+                }
+
+                random_list = {
+                    50 = {
+                        trigger_event = {
+                            id = omegaverse_manifestation.4020
+                        }
+                    }
+                    50 = {
+                        trigger_event = {
+                            id = omegaverse_manifestation.4021
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+# ==========================================
+# CHILD HINT EVENTS
+# ==========================================
+omegaverse_manifestation.4010 = {
+    type = character_event
+
+    title = omegaverse_manifestation.4010.t
+    desc = omegaverse_manifestation.4010.d
+
+    theme = education
+
+    right_portrait = {
+        character = root
+        animation = disbelief
+        camera = camera_event_table_center
+    }
+
+    trigger = {
+        has_trait = omegaverse_unrevealed_secondary_gender
+    }
+
+    option = {
+        name = omegaverse_manifestation.4010.a
+    }
+}
+
+omegaverse_manifestation.4011 = {
+    type = character_event
+
+    title = omegaverse_manifestation.4011.t
+ 
+    desc = omegaverse_manifestation.4011.d
+
+    theme = default
+
+    right_portrait = {
+        character = root
+        animation = stunned
+        camera = camera_event_table_center
+    }
+
+    trigger = {
+        has_trait = omegaverse_unrevealed_secondary_gender
+    }
+
+    option = {
+        name = omegaverse_manifestation.4011.a
+    }
+}
+
+# ==========================================
+# PARENT HINT EVENTS
+# ==========================================
+omegaverse_manifestation.4020 = {
+    type = character_event
+
+    title = omegaverse_manifestation.4020.t
+    desc = omegaverse_manifestation.4020.d
+
+    theme = education
+
+    right_portrait = {
+        character = scope:omegaverse_child
+        animation = disbelief
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_manifestation.4020.a
+    }
+}
+
+omegaverse_manifestation.4021 = {
+    type = character_event
+
+    title = omegaverse_manifestation.4021.t
+    desc = omegaverse_manifestation.4021.d
+
+    theme = default
+
+    right_portrait = {
+        character = scope:omegaverse_child
+        animation = stunned
+        camera = camera_event_table_center
+    }
+
+    option = {
+        name = omegaverse_manifestation.4021.a
+    }
+}
