@@ -1,0 +1,20 @@
+﻿namespace = omegaverse_setup
+
+omegaverse_setup.0001 = {
+    type = character_event
+    title = omegaverse_setup.0001.t
+
+    right_portrait = {
+        character = root
+    }
+
+    desc = {
+        desc = omegaverse_setup.0001.d
+        desc = omegaverse_setup.0001.d2
+        desc = omegaverse_setup.0001.d3
+    }
+
+    option = {
+        name = omegaverse_setup.0001.a
+    }
+}

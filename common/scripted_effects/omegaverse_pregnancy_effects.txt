@@ -1,0 +1,218 @@
+﻿# ==========================================
+# PREGNANCY SUPPRESSION
+# ==========================================
+omegaverse_update_pregnancy_suppression = {
+    remove_character_modifier = omegaverse_pregnancy_suppression
+
+    if = {
+        limit = {
+            OR = {
+                AND = {
+                    is_male = yes
+                    has_trait_with_flag = omegaverse_omega_gender
+                }
+
+                AND = {
+                    is_female = yes
+                    has_trait_with_flag = omegaverse_alpha_gender
+                }
+            }
+        }
+
+        add_character_modifier = omegaverse_pregnancy_suppression
+    }
+}
+
+# ==========================================
+# CONCEPTION CHANCE CALCULATOR
+#
+# wip bc idk good rates aahah
+# need to sync it w conception processor?
+# ==========================================
+omegaverse_calculate_pregnancy_chance = {
+    # base from bearer sub
+    if = {
+        limit = {
+            scope:omegaverse_conception_bearer = {
+                has_trait_with_flag = omegaverse_recessive_subtrait
+            }
+        }
+
+        set_variable = {
+            name = omegaverse_pregnancy_chance
+            value = 20
+        }
+    }
+    else_if = {
+        limit = {
+            scope:omegaverse_conception_bearer = {
+                has_trait_with_flag = omegaverse_standard_subtrait
+            }
+        }
+
+        set_variable = {
+            name = omegaverse_pregnancy_chance
+            value = 30
+        }
+    }
+    else_if = {
+        limit = {
+            scope:omegaverse_conception_bearer = {
+                has_trait_with_flag = omegaverse_dominant_subtrait
+            }
+        }
+
+        set_variable = {
+            name = omegaverse_pregnancy_chance
+            value = 40
+        }
+    }
+    else = {
+        set_variable = {
+            name = omegaverse_pregnancy_chance
+            value = 30
+        }
+    }
+
+    # bearer cycle peak case
+    if = {
+        limit = {
+            scope:omegaverse_conception_bearer = {
+                has_character_flag = omegaverse_cycle_peak
+                has_character_flag = omegaverse_in_heat
+            }
+        }
+
+        set_variable = {
+            name = omegaverse_pregnancy_chance
+            value = 100
+        }
+    }
+
+    else = {
+        # sire subtrait
+        if = {
+            limit = {
+                scope:omegaverse_conception_sire = {
+                    has_trait_with_flag = omegaverse_recessive_subtrait
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 0.9
+            }
+        }
+        else_if = {
+            limit = {
+                scope:omegaverse_conception_sire = {
+                    has_trait_with_flag = omegaverse_dominant_subtrait
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.3
+            }
+        }
+
+        # bearer cycle 
+        if = {
+            limit = {
+                scope:omegaverse_conception_bearer = {
+                    has_character_flag = omegaverse_cycle_start
+                    has_character_flag = omegaverse_in_heat
+
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.5
+            }
+        }
+
+        else_if = {
+            limit = {
+                scope:omegaverse_conception_bearer = {
+                    has_character_flag = omegaverse_cycle_ebbed
+                    has_character_flag = omegaverse_in_heat
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.2
+            }
+        }
+
+        # sire cycle
+        if = {
+            limit = {
+                scope:omegaverse_conception_sire = {
+                    has_character_flag = omegaverse_cycle_start
+                    has_character_flag = omegaverse_in_rut
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.2
+            }
+        }
+        else_if = {
+            limit = {
+                scope:omegaverse_conception_sire = {
+                    has_character_flag = omegaverse_cycle_peak
+                    has_character_flag = omegaverse_in_rut
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.4
+            }
+        }
+        else_if = {
+            limit = {
+                scope:omegaverse_conception_sire = {
+                    has_character_flag = omegaverse_cycle_ebbed
+                    has_character_flag = omegaverse_in_rut
+                }
+            }
+
+            change_variable = {
+                name = omegaverse_pregnancy_chance
+                multiply = 1.1
+            }
+        }
+
+        # cap
+        if = {
+            limit = {
+                var:omegaverse_pregnancy_chance >= 100
+            }
+
+            set_variable = {
+                name = omegaverse_pregnancy_chance
+                value = 100
+            }
+        }
+    }
+}
+
+# ==========================================
+# PREGNANCY CLEAN UP
+# ==========================================
+omegaverse_clear_pregnancy = {
+    remove_trait = omegaverse_carrying_child
+
+    remove_character_flag = omegaverse_pregnancy_pending
+    remove_character_flag = omegaverse_unborn_female
+    remove_character_flag = omegaverse_unborn_male
+    remove_character_flag = omegaverse_pregnancy_will_go_smoothly
+    remove_character_flag = omegaverse_child_will_become_sickly
+    remove_character_flag = omegaverse_bearer_will_become_ill
+
+    remove_variable = omegaverse_conception_date
+}

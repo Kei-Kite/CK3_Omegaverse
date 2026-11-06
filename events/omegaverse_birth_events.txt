@@ -207,6 +207,9 @@ omegaverse_birth.1000 = {
 
             add_trait = omegaverse_unrevealed_secondary_gender
             add_character_flag = omegaverse_secondary_gender_hidden
+        
+            # trait families like beauty
+            omegaverse_inherit_congenital_traits_effect = yes
         }
 
         # child ill

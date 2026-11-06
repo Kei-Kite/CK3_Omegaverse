@@ -1,159 +1,29 @@
 ﻿# ======================================
-# PIPELINE -> update this pls
-#
 # determine_abo
-#   determine_subtype
-#       
-# reveal_secondary_gender
-#   apply_destined_abo
-#   update_pregnancy_suppression
-#
-# ensure_abo
 #   basic_abo_roll
-#   basic_sub_roll
-#   apply_destined_abo
-#   remove_destiny_character_flags
-#   update_pregnancy_suppression
+#   determine_subtype
+#       basic_sub_roll
+#       
+# ensure_abo
+#   reveal_secondary_gender
 # 
-# assign_vanilla_child_abo
-#   determine_abo
+# apply_destined_abo
+# 
+# ensure_valid_destiny
+#
+# reveal_secondary_gender
+#   ensure_valid_destiny
+#   apply_destined_abo
+#   clear_destiny
+#   update_pregnancy_suppression
+#   schedule_cycle
+# 
+# give_manifestation_hint
+# 
+# schedule_cycle
 # 
 # clear_destiny
-# clear_pregnancy
 # ======================================
-
-# ==========================================
-# INIT SETUP
-# ==========================================
-omegaverse_initial_setup = {
-    every_living_character = {
-        limit = {
-            is_adult = yes
-
-            NOT = {
-                has_trait_with_flag = omegaverse_secondary_gender
-            }
-
-            NOT = {
-                has_trait = omegaverse_unrevealed_secondary_gender
-            }
-        }
-
-        # pregnant - no alpha
-        if = {
-            limit = {
-                is_pregnant = yes
-            }
-
-            random_list = {
-                50 = { add_trait = omegaverse_standard_beta }
-                40 = { add_trait = omegaverse_standard_omega }
-                5 = { add_trait = omegaverse_recessive_omega }
-                5 = { add_trait = omegaverse_dominant_omega }
-            }
-        }
-
-        # adults w children (no male omega, no fem alpha)
-        # i should change this depending on game rules, no?
-        else_if = {
-            limit = {
-                any_child = {
-                    always = yes
-                }
-            }
-
-            if = {
-                limit = {
-                    is_male = yes
-                }
-
-                random_list = {
-                    50 = { add_trait = omegaverse_standard_beta }
-                    40 = { add_trait = omegaverse_standard_alpha }
-                    5 = { add_trait = omegaverse_recessive_alpha }
-                    5 = { add_trait = omegaverse_dominant_alpha }
-                }
-            }
-
-            else_if = {
-                limit = {
-                    is_female = yes
-                }
-
-                random_list = {
-                    50 = { add_trait = omegaverse_standard_beta }
-                    40 = { add_trait = omegaverse_standard_omega }
-                    5 = { add_trait = omegaverse_recessive_omega }
-                    5 = { add_trait = omegaverse_dominant_omega }
-                }
-            }
-        }
-
-        # childless adult - any
-        else = {
-            random_list = {
-                2 = { add_trait = omegaverse_dominant_alpha }
-                3 = { add_trait = omegaverse_recessive_alpha }
-                10 = { add_trait = omegaverse_standard_alpha }
-                70 = { add_trait = omegaverse_standard_beta }
-                10 = { add_trait = omegaverse_standard_omega }
-                3 = { add_trait = omegaverse_recessive_omega }
-                2 = { add_trait = omegaverse_dominant_omega }
-            }
-        }
-
-        add_character_flag = omegaverse_secondary_gender_revealed
-        omegaverse_update_pregnancy_suppression = yes
-        omegaverse_schedule_cycle = yes
-    }
-
-    every_living_character = {
-        limit = {
-            is_adult = no
-            NOT = {
-                has_trait_with_flag = omegaverse_secondary_gender
-            }
-
-            NOT = {
-                has_trait = omegaverse_unrevealed_secondary_gender
-            }
-        }
-
-        if = {
-            limit = {
-                exists = root.father
-            }
-
-            root.father = {
-                save_scope_as = biological_father
-            }
-        }
-
-        if = {
-            limit = {
-                exists = root.mother
-            }
-
-            root.mother = {
-                save_scope_as = biological_bearer
-            }
-        }
-
-        omegaverse_determine_abo = yes
-
-        add_trait = omegaverse_unrevealed_secondary_gender
-        add_character_flag = omegaverse_secondary_gender_hidden
-
-        # can never be reached. good
-        if = {
-            limit = {
-                age >= 16
-            }
-
-            omegaverse_reveal_secondary_gender = yes
-        }
-    }
-}
 
 # ======================================
 # TRAIT GENETICS
@@ -537,111 +407,42 @@ omegaverse_basic_sub_roll = {
 omegaverse_ensure_abo = {
     if = {
         limit = {
+            age >= 16
             NOT = {
                 has_trait_with_flag = omegaverse_secondary_gender
             }
-
-            NOT = {
-                has_trait = omegaverse_unrevealed_secondary_gender
-            }
         }
 
-        # adults go thru reveal
-        if = {
-            limit = {
-                age >= 16
-            }
-            omegaverse_reveal_secondary_gender = yes
-        }
-
-        else = {
-            omegaverse_determine_abo = yes
-            add_trait = omegaverse_unrevealed_secondary_gender
-            add_character_flag = omegaverse_secondary_gender_hidden
-        }
+        omegaverse_reveal_secondary_gender = yes
     }
-}
-
-# ======================================
-# VANILLA GENETICS
-# ======================================
-omegaverse_assign_vanilla_child_abo = {
-    if = {
+    else_if = {
         limit = {
+            age < 16
+
             NOT = {
                 has_trait_with_flag = omegaverse_secondary_gender
             }
 
             NOT = {
                 has_trait = omegaverse_unrevealed_secondary_gender
-            }
-        }
-
-
-        if = {
-            limit = {
-                exists = mother
-            }
-
-            set_variable = {
-                name = omegaverse_bearer
-                value = mother
-            }
-
-            mother = {
-                add_to_variable_list = {
-                    name = omegaverse_children
-                    target = root
-                }
-            }
-        }
-
-        if = {
-            limit = {
-                exists = father
-            }
-
-            set_variable = {
-                name = omegaverse_sire
-                value = father
-            }
-
-            father = {
-                add_to_variable_list = {
-                    name = omegaverse_children
-                    target = root
-                }
-            }
-        }
-
-        clear_variable_list = omegaverse_parents
-
-        if = {
-            limit = {
-                exists = var:omegaverse_bearer
-            }
-
-            add_to_variable_list = {
-                name = omegaverse_parents
-                target = var:omegaverse_bearer
-            }
-        }
-
-        if = {
-            limit = {
-                exists = var:omegaverse_sire
-            }
-
-            add_to_variable_list = {
-                name = omegaverse_parents
-                target = var:omegaverse_sire
             }
         }
 
         omegaverse_determine_abo = yes
-
         add_trait = omegaverse_unrevealed_secondary_gender
         add_character_flag = omegaverse_secondary_gender_hidden
+    }
+
+    if = {
+        limit = {
+            age >= 16
+            AND = {
+                has_trait_with_flag = omegaverse_secondary_gender
+                has_trait = omegaverse_unrevealed_secondary_gender
+            }
+        }
+        
+        remove_trait = omegaverse_unrevealed_secondary_gender
     }
 }
 
@@ -902,225 +703,6 @@ omegaverse_schedule_cycle = {
             months = { 6 18 }
         }
     }
-}
-
-# ==========================================
-# PREGNANCY SUPPRESSION
-# ==========================================
-omegaverse_update_pregnancy_suppression = {
-    remove_character_modifier = omegaverse_pregnancy_suppression
-
-    if = {
-        limit = {
-            OR = {
-                AND = {
-                    is_male = yes
-                    has_trait_with_flag = omegaverse_omega_gender
-                }
-
-                AND = {
-                    is_female = yes
-                    has_trait_with_flag = omegaverse_alpha_gender
-                }
-            }
-        }
-
-        add_character_modifier = omegaverse_pregnancy_suppression
-    }
-}
-
-# ==========================================
-# CONCEPTION CHANCE CALCULATOR
-#
-# wip bc idk good rates aahah
-# need to sync it w conception processor?
-# ==========================================
-omegaverse_calculate_pregnancy_chance = {
-    # base from bearer sub
-    if = {
-        limit = {
-            scope:omegaverse_conception_bearer = {
-                has_trait_with_flag = omegaverse_recessive_subtrait
-            }
-        }
-
-        set_variable = {
-            name = omegaverse_pregnancy_chance
-            value = 20
-        }
-    }
-    else_if = {
-        limit = {
-            scope:omegaverse_conception_bearer = {
-                has_trait_with_flag = omegaverse_standard_subtrait
-            }
-        }
-
-        set_variable = {
-            name = omegaverse_pregnancy_chance
-            value = 30
-        }
-    }
-    else_if = {
-        limit = {
-            scope:omegaverse_conception_bearer = {
-                has_trait_with_flag = omegaverse_dominant_subtrait
-            }
-        }
-
-        set_variable = {
-            name = omegaverse_pregnancy_chance
-            value = 40
-        }
-    }
-    else = {
-        set_variable = {
-            name = omegaverse_pregnancy_chance
-            value = 30
-        }
-    }
-
-    # bearer cycle peak case
-    if = {
-        limit = {
-            scope:omegaverse_conception_bearer = {
-                has_character_flag = omegaverse_cycle_peak
-                has_character_flag = omegaverse_in_heat
-            }
-        }
-
-        set_variable = {
-            name = omegaverse_pregnancy_chance
-            value = 100
-        }
-    }
-
-    else = {
-        # sire subtrait
-        if = {
-            limit = {
-                scope:omegaverse_conception_sire = {
-                    has_trait_with_flag = omegaverse_recessive_subtrait
-                }
-            }
-
-            change_variable = {
-                name = omegaverse_pregnancy_chance
-                multiply = 0.9
-            }
-        }
-        else_if = {
-            limit = {
-                scope:omegaverse_conception_sire = {
-                    has_trait_with_flag = omegaverse_dominant_subtrait
-                }
-            }
-
-            change_variable = {
-                name = omegaverse_pregnancy_chance
-                multiply = 1.3
-            }
-        }
-
-        # bearer cycle 
-        if = {
-            limit = {
-                scope:omegaverse_conception_bearer = {
-                    has_character_flag = omegaverse_cycle_start
-                    has_character_flag = omegaverse_in_heat
-
-                }
-            }
-
-            change_variable = {
-                name = omegaverse_pregnancy_chance
-                multiply = 1.5
-            }
-        }
-
-        else_if = {
-            limit = {
-                scope:omegaverse_conception_bearer = {
-                    has_character_flag = omegaverse_cycle_ebbed
-                    has_character_flag = omegaverse_in_heat
-                }
-            }
-
-            change_variable = {
-                name = omegaverse_pregnancy_chance
-                multiply = 1.2
-            }
-        }
-
-        # sire cycle
-        if = {
-            limit = {
-                scope:omegaverse_conception_sire = {
-                    has_character_flag = omegaverse_cycle_start
-                    has_character_flag = omegaverse_in_rut
-                }
-            }
-
-            change_variable = {
-                name = omegaverse_pregnancy_chance
-                multiply = 1.2
-            }
-        }
-        else_if = {
-            limit = {
-                scope:omegaverse_conception_sire = {
-                    has_character_flag = omegaverse_cycle_peak
-                    has_character_flag = omegaverse_in_rut
-                }
-            }
-
-            change_variable = {
-                name = omegaverse_pregnancy_chance
-                multiply = 1.4
-            }
-        }
-        else_if = {
-            limit = {
-                scope:omegaverse_conception_sire = {
-                    has_character_flag = omegaverse_cycle_ebbed
-                    has_character_flag = omegaverse_in_rut
-                }
-            }
-
-            change_variable = {
-                name = omegaverse_pregnancy_chance
-                multiply = 1.1
-            }
-        }
-
-        # cap
-        if = {
-            limit = {
-                var:omegaverse_pregnancy_chance >= 100
-            }
-
-            set_variable = {
-                name = omegaverse_pregnancy_chance
-                value = 100
-            }
-        }
-    }
-}
-
-# ==========================================
-# PREGNANCY CLEAN UP
-# ==========================================
-omegaverse_clear_pregnancy = {
-    remove_trait = omegaverse_carrying_child
-
-    remove_character_flag = omegaverse_pregnancy_pending
-    remove_character_flag = omegaverse_unborn_female
-    remove_character_flag = omegaverse_unborn_male
-    remove_character_flag = omegaverse_pregnancy_will_go_smoothly
-    remove_character_flag = omegaverse_child_will_become_sickly
-    remove_character_flag = omegaverse_bearer_will_become_ill
-
-    remove_variable = omegaverse_conception_date
 }
 
 # ======================================

@@ -1,0 +1,8 @@
+﻿l_english:
+ omegaverse_setup.0001.t:0 "Welcome to the Omegaverse!"
+ omegaverse_setup.0001.d:0 "Heyho! Thank you for playing this mod!\n\n"
+ 
+ omegaverse_setup.0001.d2:0 "Latest version: 1.0.1 \n\n"
+ omegaverse_setup.0001.d3:0 "Changes: \n - Added support for congenital traits \n - Improved background processing to reduce performance impact"
+
+ omegaverse_setup.0001.a:0 "Let's begin!"

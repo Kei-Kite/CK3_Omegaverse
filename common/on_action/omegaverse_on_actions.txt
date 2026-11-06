@@ -7,6 +7,16 @@
 omegaverse_initialization = {
     effect = {
         omegaverse_initial_setup = yes
+
+        every_player = {
+            limit = {
+                is_ai = no
+            }
+
+            trigger_event = {
+                id = omegaverse_setup.0001
+            }
+        }
     }
 }
 
@@ -66,6 +76,12 @@ on_guest_arrived_from_pool = {
     }
 }
 
+on_character_created = {
+	on_actions = {
+        omegaverse_ensure_abo_action
+    }
+}
+
 omegaverse_ensure_abo_action = {
     effect = {
         omegaverse_ensure_abo = yes
@@ -111,7 +127,13 @@ omegaverse_conception_pulse = {
 random_yearly_everyone_pulse = {
     on_actions = {
         omegaverse_abo_fallback_pulse
+        delay = {
+            months = 1
+        }
         omegaverse_manifestation_fallback_pulse
+        delay = {
+            months = 1
+        }
         omegaverse_cycle_fallback_pulse
     }
 }
@@ -119,7 +141,6 @@ random_yearly_everyone_pulse = {
 omegaverse_abo_fallback_pulse = {
     effect = {
         omegaverse_ensure_abo = yes
-        # omegaverse_schedule_cycle = yes
     }
 }
 

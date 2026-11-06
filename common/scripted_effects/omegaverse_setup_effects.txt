@@ -1,0 +1,271 @@
+﻿# ==========================================
+# INIT SETUP
+# ==========================================
+omegaverse_initial_setup = {
+    every_living_character = {
+        limit = {
+            age >= 16
+            
+            NOT = {
+                has_trait_with_flag = omegaverse_secondary_gender
+            }
+
+            NOT = {
+                has_trait = omegaverse_unrevealed_secondary_gender
+            }
+        }
+
+        # pregnant - no alpha
+        if = {
+            limit = {
+                is_pregnant = yes
+            }
+            
+            random_list = {
+                50 = { 
+                    add_character_flag = omegaverse_destined_beta 
+                }
+                50 = { 
+                    add_character_flag = omegaverse_destined_omega 
+                }
+            }
+
+            random_list = {
+                80 = {
+                    add_character_flag = omegaverse_destined_dominant
+                }
+                10 = {
+                    add_character_flag = omegaverse_destined_standard
+                }
+                10 = {
+                    add_character_flag = omegaverse_destined_recessive
+                }
+            }
+        }
+
+        # adults w children (no male omega, no fem alpha)
+        # i should change this depending on game rules, no?
+        else_if = {
+            limit = {
+                any_child = {
+                    always = yes
+                }
+            }
+
+            if = {
+                limit = {
+                    is_male = yes
+                }
+
+                random_list = {
+                    50 = { 
+                        add_character_flag = omegaverse_destined_alpha
+                    }
+                    50 = { 
+                        add_character_flag = omegaverse_destined_beta 
+                    }
+                }
+
+                random_list = {
+                    80 = {
+                        add_character_flag = omegaverse_destined_dominant
+                    }
+                    10 = {
+                        add_character_flag = omegaverse_destined_standard
+                    }
+                    10 = {
+                        add_character_flag = omegaverse_destined_recessive
+                    }
+                }
+            }
+
+            else_if = {
+                limit = {
+                    is_female = yes
+                }
+
+                random_list = {
+                    50 = { 
+                        add_character_flag = omegaverse_destined_beta
+                    }
+                    50 = { 
+                        add_character_flag = omegaverse_destined_omega
+                    }
+                }
+
+                random_list = {
+                    80 = {
+                        add_character_flag = omegaverse_destined_dominant
+                    }
+                    10 = {
+                        add_character_flag = omegaverse_destined_standard
+                    }
+                    10 = {
+                        add_character_flag = omegaverse_destined_recessive
+                    }
+                }
+            }
+        }
+
+        # childless adult - any
+        else = {
+            random_list = {
+                random_list = {
+                    15 = { 
+                        add_character_flag = omegaverse_destined_alpha
+                    }
+                    80 = { 
+                        add_character_flag = omegaverse_destined_beta 
+                    }
+                    15 = { 
+                        add_character_flag = omegaverse_destined_omega 
+                    }
+                }
+
+                random_list = {
+                    80 = {
+                        add_character_flag = omegaverse_destined_dominant
+                    }
+                    10 = {
+                        add_character_flag = omegaverse_destined_standard
+                    }
+                    10 = {
+                        add_character_flag = omegaverse_destined_recessive
+                    }
+                }
+            }
+        }
+
+        omegaverse_reveal_secondary_gender = yes
+    }
+
+    every_living_character = {
+        limit = {
+            age < 16
+            NOT = {
+                has_trait_with_flag = omegaverse_secondary_gender
+            }
+
+            NOT = {
+                has_trait = omegaverse_unrevealed_secondary_gender
+            }
+        }
+
+        if = {
+            limit = {
+                exists = root.father
+            }
+
+            root.father = {
+                save_scope_as = omegaverse_sire
+            }
+        }
+
+        if = {
+            limit = {
+                exists = root.mother
+            }
+
+            root.mother = {
+                save_scope_as = omegaverse_bearer
+            }
+        }
+
+        omegaverse_determine_abo = yes
+
+        add_trait = omegaverse_unrevealed_secondary_gender
+        add_character_flag = omegaverse_secondary_gender_hidden
+
+        # can never be reached. good
+        if = {
+            limit = {
+                age >= 16
+            }
+
+            omegaverse_reveal_secondary_gender = yes
+        }
+    }
+}
+
+# ======================================
+# VANILLA GENETICS
+# ======================================
+omegaverse_assign_vanilla_child_abo = {
+    if = {
+        limit = {
+            NOT = {
+                has_trait_with_flag = omegaverse_secondary_gender
+            }
+
+            NOT = {
+                has_trait = omegaverse_unrevealed_secondary_gender
+            }
+        }
+
+
+        if = {
+            limit = {
+                exists = mother
+            }
+
+            set_variable = {
+                name = omegaverse_bearer
+                value = mother
+            }
+
+            mother = {
+                add_to_variable_list = {
+                    name = omegaverse_children
+                    target = root
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                exists = father
+            }
+
+            set_variable = {
+                name = omegaverse_sire
+                value = father
+            }
+
+            father = {
+                add_to_variable_list = {
+                    name = omegaverse_children
+                    target = root
+                }
+            }
+        }
+
+        clear_variable_list = omegaverse_parents
+
+        if = {
+            limit = {
+                exists = var:omegaverse_bearer
+            }
+
+            add_to_variable_list = {
+                name = omegaverse_parents
+                target = var:omegaverse_bearer
+            }
+        }
+
+        if = {
+            limit = {
+                exists = var:omegaverse_sire
+            }
+
+            add_to_variable_list = {
+                name = omegaverse_parents
+                target = var:omegaverse_sire
+            }
+        }
+
+        omegaverse_determine_abo = yes
+
+        add_trait = omegaverse_unrevealed_secondary_gender
+        add_character_flag = omegaverse_secondary_gender_hidden
+    }
+}
